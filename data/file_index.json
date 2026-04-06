@@ -1,0 +1,17 @@
+[
+  {
+    "path": "main.py",
+    "desc": "FastAPI entry point",
+    "tags": ["api", "router"]
+  },
+  {
+    "path": "router/ai.py",
+    "desc": "Ollama AI 호출",
+    "tags": ["llm", "ollama"]
+  },
+  {
+    "path": "core/rag.py",
+    "desc": "간단 파일 검색",
+    "tags": ["search"]
+  }
+]
