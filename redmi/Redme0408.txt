@@ -1,4 +1,110 @@
+좋다. 지금 상태 기준으로 README 한 방 생성용 (복붙 1발) 준다.
+터미널에서 그대로 만들면 끝.
 
+📄 README 생성 (한방 복사)
+👉 이거 그대로 붙여넣기
+cat > README.md << 'EOF'
+# AI Router Project (ai_router)
+
+## 개요
+이 프로젝트는 DAG 기반 노드 실행 엔진 구조를 가진 간단한 AI 라우팅 시스템이다.
+
+노드 간 의존성을 그래프로 정의하고, Topological Sort를 통해 실행 순서를 결정한 뒤 순차적으로 노드를 실행하는 구조다.
+
+---
+
+## 현재 구현 상태 (v0.1)
+
+### 1. Topological Sort 엔진 구현 완료
+- Kahn Algorithm 기반 DAG 정렬
+- dependency 기반 indegree 계산
+- cycle detection 포함
+
+핵심 파일:
+- core/toposort.py
+
+---
+
+### 2. Pipeline 구조 (기본 실행 엔진)
+- 노드 실행 함수 존재
+- dependency 기반 입력 데이터 생성
+- 단순 문자열 처리 기반 mock execution
+
+핵심 파일:
+- core/pipeline.py
+
+---
+
+## 실행 구조
+
+### 입력 그래프 예시
+```python
+{
+  "A": [],
+  "B": ["A"],
+  "C": ["A"],
+  "D": ["B", "C"]
+}
+실행 흐름
+Topological Sort 수행
+→ 실행 순서 생성
+노드 실행
+→ dependency 기반 input 생성
+결과 출력
+→ processed(node <- input)
+Topological Sort 특징
+DAG 지원
+cycle detection 가능
+모든 노드 포함 (dependency node 자동 포함)
+실행 방법
+topo sort 테스트
+python3 -c "from core.toposort import topological_sort; print(topological_sort({'A':[], 'B':['A'], 'C':['A'], 'D':['B','C']}))"
+현재 구조 요약
+
+graph
+↓
+topological_sort
+↓
+execution order
+↓
+pipeline run_node
+↓
+mock processing result
+
+현재 상태 평가
+
+✔ DAG 구조 정상
+✔ topo sort 정상
+✔ execution order 안정화
+✔ engine 초기 구조 완성
+
+다음 개발 예정
+ai_provider 연결
+node 실제 AI 호출 구조
+input/output context 전달
+DAG 기반 병렬 실행 가능 구조
+결과 캐싱 시스템
+한줄 요약
+
+"그래프 기반 실행 엔진의 뼈대가 완성된 상태"
+EOF
+
+
+---
+
+# 💾 저장 확인
+
+```bash
+ls -l README.md
+cat README.md
+😏 한줄 정리
+
+이 README는 “지금까지 만든 엔진 스냅샷”이다
+다음 단계 가기 전에 무조건 남겨야 하는 포인트
+
+원하면 다음 단계 바로 간다:
+
+👉 “진짜 AI 실행 엔진 구조 (노드 = LLM call)”
 
 
 
