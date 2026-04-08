@@ -1,13 +1,15 @@
-from core.graph_v5 import build_execution_dag
-from core.graph_clean import clean_graph
-from core.import_resolver import resolve_graph
-from core.router_rank import rank_graph
-from core.entry_filter import build_entry_graph
+def run_node(node, graph):
+    deps = graph.get(node, [])
 
-def run(entry="main.py"):
-    g = build_execution_dag()
-    g = clean_graph(g)
-    g = resolve_graph(g)
-    g = rank_graph(g)
-    g = build_entry_graph(g, entry)
-    return g
+    input_data = ''
+    for d in deps:
+        input_data += str(d) + ' '
+
+    if not input_data.strip():
+        input_data = node
+
+    return f'processed({node} <- {input_data})'
+
+
+def run_node_safe(node):
+    return run_node(node, {})
