@@ -1,21 +1,11 @@
+print('CLI LOADED')
+from core.pipeline import run
 import sys
 from core.graph_unified import build_unified_graph
 
 
-def cmd_graph():
-    g = build_unified_graph()
-
-    print("\n=== GRAPH ===\n")
-
-    for k, v in g.items():
-        print(f"[{k}]")
-        print(f"  type: {v.get('type')}")
-        print(f"  calls: {v.get('calls')}")
-        print()
-
-
 def cmd_debug(target):
-    g = build_unified_graph()
+    g = run()
 
     if target not in g:
         print("not found:", target)
@@ -45,6 +35,10 @@ def main():
     if cmd == "graph":
         cmd_graph()
 
+
+    if cmd == "graph":
+        cmd_graph()
+
     elif cmd == "debug":
         if len(sys.argv) < 3:
             print("usage: ai_router debug <target>")
@@ -57,3 +51,24 @@ def main():
     else:
         print("unknown command:", cmd)
         cmd_help()
+
+
+
+
+def cmd_graph():
+    print('GRAPH CALLED')
+    print("GRAPH HIT")
+    g = run()
+    print("RUN RESULT:", g)
+
+    print("\n=== GRAPH ===\n")
+
+    for k, v in (g or {}).items():
+        print(f"[{k}]")
+        for item in v:
+            print("  ->", item)
+        print()
+
+
+if __name__ == '__main__':
+    main()
