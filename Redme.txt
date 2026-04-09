@@ -7,6 +7,176 @@
 👉 지금은 “데이터 흐름 연결 테스트”
 
 
+-----------------
+
+
+🧠 다음 단계 (진짜 핵심)
+
+이제 여기로 간다:
+
+🔵 STEP 1 (다음 필수)
+
+👉 node 실행 안에 AI 넣기
+
+node → ai_call → output
+🟡 STEP 2
+
+👉 score 붙이기
+
+output → score
+🔴 STEP 3
+
+👉 retry loop
+
+score 낮으면 재실행
+💀 STEP 4
+
+👉 reflect (self-correction)
+
+------------------------------------------2
+
+🎯 먼저 구조를 딱 나눠야 함
+
+지금 네가 말한 4단계는 사실 3층 구조로 정리된다.
+
+🧱 1층: Execution (필수)
+
+👉 node → ai_call → output
+
+이건 이미 완성됨
+
+🧠 2층: Evaluation (추가)
+
+👉 output → score
+
+이건 “AI 판단 레이어”임
+
+🔁 3층: Control Loop (고급)
+
+👉 retry / reflect / improve
+
+이건 “self-healing 시스템”
+
+💣 지금 흐린 이유
+
+너는 지금 이렇게 섞고 있음:
+
+execution (node)
+evaluation (score)
+control (retry)
+
+👉 한 파일/한 함수에서 다 하려고 해서 흐려짐
+
+🚀 정리: 제대로 된 구조
+✔ core 책임 분리
+1. node.py (절대 단순해야 함)
+input → ai_call → output
+2. evaluator.py (새 파일)
+output → score
+3. runner.py (컨트롤러)
+node 실행 → score 확인 → retry 여부 판단
+🔥 핵심 포인트
+
+👉 “AI는 node 안에서만”
+👉 “판단은 node 밖에서”
+
+이거 안 지키면 계속 흐려짐
+
+💡 네 4단계 재정렬
+🔵 STEP 1 (완료)
+
+node → ai_call
+
+🟡 STEP 2 (추가)
+
+output → score (evaluator.py)
+
+🔴 STEP 3 (runner)
+
+score < threshold → retry
+
+💀 STEP 4 (옵션)
+
+reflection node 추가
+
+⚠️ 지금 제일 중요한 결론
+
+👉 “문제가 아니라 구조가 커지는 정상 과정인데, 책임이 섞여서 혼란 생긴 상태”
+
+🚀 다음 액션 (추천)
+
+지금은 무조건 이 순서:
+
+1) evaluator.py 추가
+2) runner에 score 연결
+3) retry loop 추가
+
+원하면 다음 단계 바로 간다:
+
+👉 “score system + retry loop 깔끔한 최소 구조” (500자 파일 제한 맞춰서)
+
+------------------------3---------------------
+
+
+🧠 다음 해야 할 건 “구조 1개 추가”임
+
+핵심은 이거 하나:
+
+if score < threshold:
+    prompt = reflect(output, score)
+    rerun AI
+🔵 STEP 2 (진짜 핵심 코드 구조)
+
+이건 이렇게 바뀜:
+
+1. ai_call
+2. score
+3. if score 낮음:
+       reflection 생성
+       ai_call 재실행
+💡 구조로 보면 이거임
+           ┌──────────┐
+           │  AI RUN  │
+           └────┬─────┘
+                ↓
+           ┌──────────┐
+           │  SCORE   │
+           └────┬─────┘
+        낮음 ↓       ↑ 높음
+           ┌───────┐
+           │REFLECT│
+           └───────┘
+                ↓
+            AI RUN (retry)
+🔧 지금 너 상태 요약
+AI 연결 성공 ✔
+scoring 성공 ✔
+multi output 성공 ✔
+agent loop 미구현 ❌
+🚀 다음 내가 해줄 수 있는 것
+
+바로 선택해:
+
+A
+
+👉 retry loop 코드 붙여준다 (초간단 30줄)
+
+B
+
+👉 reflect prompt 설계 (성능 2배 올라가는 핵심)
+
+C
+
+👉 구조 전체 agent framework로 리팩토링
+
+
+
+
+
+
+
+
+
 <04/08>
 
 
