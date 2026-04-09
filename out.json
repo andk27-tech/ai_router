@@ -1,57 +1,44 @@
 {
-  "result": {
-    "A": "[MOCK] A: START",
-    "B": "[MOCK] B: [MOCK] A: START ",
-    "C": "[MOCK] C: [MOCK] A: START ",
-    "D": "[MOCK] D: [MOCK] B: [MOCK] A: START  [MOCK] C: [MOCK] A: START  ",
-    "REFLECT": "[MOCK] \nYou are a strict reviewer.\n\nReview this output:\n[MOCK] D: [MOCK] B: [MOCK] A: START  [MOCK] C: [MOCK] A: START  \n\nReturn:\n1. problems\n2. missing parts\n3. improved answer\n"
-  },
-  "flow": [
-    "A",
-    "B",
-    "C",
-    "D"
-  ],
   "trace": [
     {
       "node": "A",
       "event": "START",
-      "t": 1775645645.0640445
+      "t": 7.152557373046875e-07
     },
     {
       "node": "A",
       "event": "END",
-      "t": 1775645645.0642512
+      "t": 0.01011514663696289
     },
     {
       "node": "B",
       "event": "START",
-      "t": 1775645645.0646012
-    },
-    {
-      "node": "C",
-      "event": "START",
-      "t": 1775645645.0648332
+      "t": 0.010120868682861328
     },
     {
       "node": "B",
       "event": "END",
-      "t": 1775645645.0649426
+      "t": 0.020213603973388672
+    },
+    {
+      "node": "C",
+      "event": "START",
+      "t": 0.020215988159179688
     },
     {
       "node": "C",
       "event": "END",
-      "t": 1775645645.0651035
-    },
-    {
-      "node": "D",
-      "event": "START",
-      "t": 1775645645.0653408
-    },
-    {
-      "node": "D",
-      "event": "END",
-      "t": 1775645645.0654356
+      "t": 0.030315637588500977
     }
-  ]
+  ],
+  "graph": {
+    "A": [
+      "B",
+      "C"
+    ],
+    "B": [
+      "C"
+    ],
+    "C": []
+  }
 }
