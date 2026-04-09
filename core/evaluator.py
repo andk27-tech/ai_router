@@ -1,28 +1,20 @@
-def evaluate(output):
-    if not output:
-        return 0, "empty"
+def evaluate(output, policy=None):
+    text = output.lower()
 
-    words = output.split()
+    base = 5
 
-    score = 0
-    reason = []
+    # 길이 보너스
+    base += min(len(text) / 50, 3)
 
-    # 다양성
-    unique = len(set(words))
-    score += unique
-    if unique < 3:
-        reason.append("too repetitive")
+    # policy 가중치
+    if policy == "expand":
+        base += text.count("|") * 0.5
+    elif policy == "balance":
+        base += 1 if "균형" in text else 0
+    elif policy == "refine":
+        base += 1 if "정리" in text else 0
 
-    # 길이
-    length = len(words)
-    score += min(length, 10)
-    if length < 3:
-        reason.append("too short")
+    # 안정화
+    score = int(min(10, max(1, base)))
 
-    # 반복 패널티
-    max_repeat = max(words.count(w) for w in set(words))
-    if max_repeat >= 3:
-        score -= 10
-        reason.append("heavy repetition")
-
-    return score, ", ".join(reason) if reason else "ok"
+    return score, "policy-aware"
