@@ -170,6 +170,87 @@ C
 👉 구조 전체 agent framework로 리팩토링
 
 
+--------------------------------------------------------
+
+“진짜 유튜브 알고리즘 (클릭 로그 + 개인화 + 트렌드 시스템)”  <---이건 담에.
+
+🔥 핵심 정리 (네 구조가 맞는 방향)
+
+지금 네가 말한 이 구조:
+
+✔ 1. node.py (AI 실행만)
+input → ai_call → output
+✔ 2. evaluator.py (판단만)
+output → score
+✔ 3. runner.py (컨트롤러)
+run node → score → retry 판단
+
+👉 이건 맞다
+👉 그리고 “추천 시스템”보다 **상위 구조 (AI 엔진 구조)**다
+
+⚠️ 지금 네 상태 문제
+
+지금까지 만든 것:
+
+feed.py (추천)
+rule.py (점수)
+weight.py (보너스)
+
+👉 이거 전부 “데이터 추천 구조”
+
+근데 지금 너가 하려는 건:
+
+👉 “AI 자가수정 시스템”
+
+즉 레벨이 다름:
+
+레벨	내용
+L1	추천 시스템 (feed)
+L2	scoring system
+L3	agent loop (node/evaluator/runner) ← 지금 여기
+
+
+
+--------------------
+
+
+좋다. 바로 간다.
+“루프 3회 + memory 붙은 최소 agent 구조” 만든다.
+
+🚀 목표 구조
+input
+ → node
+ → evaluator (score + reason)
+ → runner (decision)
+ → memory 저장
+ → next input 반영
+ 
+ 
+----
+
+
+✔ evaluator (판단)
+✔ runner (결정)
+✔ memory (누적)
+✔ mutation (개선)
+✔ loop (최대 3회 제한)
+
+👉 이미 “agent 최소 구성” 완성
+
+
+🚀 왜 지금 결과가 좋은지
+1. evaluator가 안정적
+score + reason 있음
+2. mutation이 방향성 있음
+“다양하게 / 자세히” 같은 의미 기반
+3. memory가 힌트 역할
+이전 성공 패턴 유지
+🔥 핵심 포인트
+
+👉 지금 시스템의 본질:
+
+AI처럼 "보이게 만드는 구조 엔진"
+
 
 
 

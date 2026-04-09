@@ -1,17 +1,28 @@
-from core.ai import ai_call
+def evaluate(output):
+    if not output:
+        return 0, "empty"
 
-def score_output(text: str) -> int:
-    prompt = f"""
-0~10 점수만 숫자로 줘라.
-내용 품질 기준: 정확성, 간결성
+    words = output.split()
 
-{text}
-""".strip()
+    score = 0
+    reason = []
 
-    res = ai_call(prompt)
+    # 다양성
+    unique = len(set(words))
+    score += unique
+    if unique < 3:
+        reason.append("too repetitive")
 
-    for c in res:
-        if c.isdigit():
-            return int(c)
+    # 길이
+    length = len(words)
+    score += min(length, 10)
+    if length < 3:
+        reason.append("too short")
 
-    return 5
+    # 반복 패널티
+    max_repeat = max(words.count(w) for w in set(words))
+    if max_repeat >= 3:
+        score -= 10
+        reason.append("heavy repetition")
+
+    return score, ", ".join(reason) if reason else "ok"
