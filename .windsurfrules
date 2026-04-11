@@ -1,0 +1,154 @@
+# AI Router Project Rules
+
+## Project Overview
+- **Type**: Experimental AI Agent Execution Engine
+- **Goal**: Self-improving AI execution system with multi-agent competition
+- **Level**: Currently Level 3 (noisy but usable graph) implemented
+
+## Architecture Structure
+
+### Brain Layer (Analysis & Decision)
+- `core/graph_v5.py`: AST-based function call graph generation
+- `core/graph_clean.py`: Graph noise filtering
+- `core/router_rank.py`: Node scoring and ranking
+- `core/score.py`: Node importance calculation
+
+### Body Layer (Execution & Control)
+- `core/pipeline.py`: Execution pipeline with retry logic
+- `core/agents.py`: Multi-agent competition system (expand/balance/refine policies)
+- `core/runner.py`: Controller with execution->evaluation->retry loop
+- `core/evaluator.py`: Result scoring and evaluation
+- `core/ai_provider.py`: AI call abstraction (OpenAI/Local/Mock)
+
+### Advanced Features
+- `core/self_mod.py`: Self-modification capabilities
+- `core/memory.py`: Learning and memory system
+- `core/reward.py`: Reward-based policy learning
+- `core/policy_evolve.py`: Policy evolution system
+
+## Current Implementation Status
+
+### Completed Features
+- Level 1-3: AST extraction, graph construction, scoring system
+- Multi-agent competition with 3 policies (expand, balance, refine)
+- Self-healing retry loop (max 3 attempts)
+- Memory-based learning system
+- Reward-based policy weight adjustment
+- FastAPI web server with `/api/run` endpoint
+
+### Not Yet Implemented
+- Level 4: Semantic dependency graph
+- Level 5: AI router graph with intelligent routing
+- Confidence scoring system
+- Full self-healing DAG
+
+## Key Design Principles
+
+1. **Separation of Concerns**: AI execution stays in nodes, evaluation stays outside
+2. **Multi-Agent Competition**: Multiple policies compete, winner survives
+3. **Self-Learning**: System improves based on reward feedback
+4. **Retry with Reflection**: Failed attempts trigger reflection and improvement
+
+## File Organization Rules
+
+- Keep core logic in `/core/` directory
+- Experimental versions should be versioned (v2, v3, etc.)
+- Mock implementations for testing (ai_provider.py fallback)
+- Pipeline execution should be traceable and debuggable
+
+## Development Guidelines
+
+- Each agent policy should be independent
+- Evaluation should be policy-aware
+- Memory should accumulate successful patterns
+- Self-modification should be safe and reversible
+- Graph construction should handle cross-file dependencies
+
+## API Endpoints
+
+- `POST /api/run`: Main execution endpoint
+- Input: JSON with data field
+- Output: AI-processed result with status
+
+## Testing Strategy
+
+- Use mock AI provider for unit tests
+- Test multi-agent competition scenarios
+- Verify retry loop behavior
+- Validate memory accumulation
+
+## Future Roadmap
+
+1. Implement semantic dependency resolution
+2. Add confidence scoring to evaluations
+3. Create full event loop engine
+4. Enable self-learning graph modifications
+
+## 📋 Documentation Index (한국어 문서)
+
+### 3개 핵심 문서 (체크리스트)
+1. **계획서.md** - 완전한 시스템 설계 청사진
+   - 목차: 10개 메인 챕터 (개요, 아키텍처, 파일구조, 구성요소, 구현단계, 기술사양, 성공지표, 위험완화, 미래로드맵, 설계원칙)
+   
+2. **맥락노트.md** - 설계 결정 및 근거
+   - 목차: 12개 메인 챕터 (왜 이 아키텍처인가, 아키텍처결정, 기술적결정, 설계트레이드오프, 실패에서의학습, 영향과영감, 아이디어의진화, 핵심설계패턴, 테스트전략, 미래고려사항, 배운교훈, 결론)
+   
+3. **체크리스트.md** - 진행 상황 추적 및 상태
+   - 목차: 11개 메인 챕터 (기초시스템, 툴레이어, 지능레이어, 고급기능, 인프라, 문서화, 배포, 품질보증, 현재상태요약, 마일스톤, 완료정의)
+
+## 🔄 자동화 워크플로우 정책 (필수 준수)
+
+### 1. 수정기록장치 (CCTV 감시)
+- **목적**: AI가 어떤 파일을 수정했는지 자동 기록
+- **위치**: `/home/lks/ai_router/log/source_log/` 폴더
+- **기록 형식**: `날짜_시간_파일명_작업내용.log`
+- **실행 조건**: 파일 수정 완료 후 반드시 수행
+
+### 2. 소스 수정 후 자동 체크 프로세스
+```
+수정 완료 → 1. 오류 자동 체크
+           ↓
+     2. 오류가 적으면 → AI가 즉시 수정
+           ↓
+     3. 오류가 많으면 → 전문 담당자 추천 알림
+```
+
+### 3. 기능 테스트 및 체크리스트 업데이트
+```
+수정된 소스 기능 테스트 → OK 이면
+                       ↓
+               체크리스트에 완료 업데이트
+                       ↓
+                   다음 단계 진행
+```
+
+### 4. 기능 완료 시 자동 백업
+```
+각 기능 완료 → 자동 git 백업 실행
+              ↓
+          커밋 메시지: "Auto-backup: [기능명] 완료 - [날짜시간]"
+              ↓
+          현재 브랜치에 자동 커밋
+```
+
+### 5. 오류 발생 시 처리
+```
+테스트 중 오류 발생 → 관리자에게 즉시 알림
+                    ↓
+                수정 요청
+```
+
+## 🎯 실행 우선순위
+
+1. **파일 수정 시**: 반드시 수정기록장치 실행
+2. **수정 후**: 자동 오류체크 및 수정 프로세스 실행
+3. **테스트 통과 시**: 체크리스트 업데이트
+4. **오류 발생 시**: 관리자 알림
+
+## 📝 필수 확인사항
+
+AI 작업 수행 전 항상 확인:
+- [ ] 3개 체크리스트 문서의 목차 숙지 여부
+- [ ] 수정기록장치 작동 여부
+- [ ] 오류체크 프로세스 실행 여부
+- [ ] 체크리스트 업데이트 필요 여부

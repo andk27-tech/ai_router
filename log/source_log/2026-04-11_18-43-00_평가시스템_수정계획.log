@@ -1,0 +1,20 @@
+=== AI 수정기록 ===
+날짜: 2026-04-11 18:43:00
+작업자: AI Assistant
+파일: 평가 시스템 (core/evaluator.py, core/policy.py, core/agents.py)
+작업내용: 평가 시스템 수정 계획 및 문제점 분석
+
+## 발견된 문제점
+1. 점수 계산 오류: expand와 expand_deep가 동일 점수 수령
+2. 평가 로직 문제: 키워드 기반 평가가 부정확함
+3. 정책 가중치 문제: 모든 정책 가중치가 1.0으로 동일
+4. expand_deep 정책에 대한 가중치 정의 없음
+
+## 수정 계획
+1. core/evaluator.py: 더 정교한 평가 기준 구현
+2. core/policy.py: expand_deep 가중치 추가
+3. core/agents.py: 정책 구분 로직 개선
+
+## 상태
+✅ 문제점 분석 완료
+⏳ 수정 진행 중

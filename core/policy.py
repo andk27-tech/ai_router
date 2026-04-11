@@ -1,7 +1,8 @@
 WEIGHTS = {
     "refine": 1.0,
     "balance": 1.0,
-    "expand": 1.0
+    "expand": 1.0,
+    "expand_deep": 1.2  # 더 깊은 확장 정책에 높은 가중치
 }
 
 def get_weight(policy):

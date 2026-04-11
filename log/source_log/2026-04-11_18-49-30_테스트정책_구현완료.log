@@ -1,0 +1,69 @@
+=== AI 수정기록 ===
+날짜: 2026-04-11 18:49:30
+작업자: AI Assistant
+파일: core/test_policy.py, core/ai.py, core/agents.py
+작업내용: 테스트 정책 시스템 구현 완료
+
+## 새로 생성된 파일
+### core/test_policy.py
+- TestMode Enum: DUMMY_1, DUMMY_2, LOCAL_AI
+- TestPolicy 클래스: 테스트 정책 관리
+- 더미 응답 생성 기능
+- 테스트 모드 전환 기능
+
+## 수정된 파일
+
+### core/ai.py
+- 테스트 정책 통합
+- 더미/로컬 AI 모드 자동 전환
+- policy 파라미터 추가
+
+### core/agents.py
+- 테스트 정책 인식 기능 추가
+- 더미/실제 AI 호출 분기 처리
+- 문서화 개선
+
+## 테스트 결과
+
+### 1차 더미 테스트
+- 모드: dummy_1
+- 결과: expand 정책 승리 (10.0점)
+- 상태: 정상 작동
+
+### 2차 더미 테스트  
+- 모드: dummy_2
+- 결과: expand 정책 승리 (10.0점)
+- 상태: 정상 작동
+
+### 로컬 AI 테스트 모드
+- 모드: local_ai
+- 상태: 로컬 AI 사용 준비 완료
+- Ollama 연동 가능
+
+## 사용 방법
+
+### 1차 테스트 (개발 초기)
+```python
+from core.test_policy import set_test_mode, TestMode
+set_test_mode(TestMode.DUMMY_1)
+```
+
+### 2차 테스트 (개발 중간)
+```python
+set_test_mode(TestMode.DUMMY_2)
+```
+
+### 최종 테스트 (실제 AI)
+```python
+set_test_mode(TestMode.LOCAL_AI)
+```
+
+## 상태
+✅ 테스트 정책 시스템 구현 완료
+✅ 1차/2차 더미 테스트 준비 완료
+✅ 최종 로컬 AI 테스트 준비 완료
+✅ 다음 단계 진행 준비 완료
+
+## 다음 단계
+- 툴 레이어 구현 시작
+- 파일 툴 (core/tools/file_tool.py) 구현
