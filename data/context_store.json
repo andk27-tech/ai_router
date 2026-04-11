@@ -69,5 +69,76 @@
       "total_tokens": 0,
       "session_duration_minutes": 0
     }
+  },
+  "ee7ad2e382a4": {
+    "session_id": "ee7ad2e382a4",
+    "created_at": "2026-04-11T20:01:59.092064",
+    "last_active": "2026-04-11T20:01:59.092150",
+    "conversation_history": [
+      {
+        "turn_id": "ee7ad2e382a4_0001",
+        "timestamp": "2026-04-11T20:01:59.092094",
+        "user_input": "Python 함수 작성해줘",
+        "intent_type": "code_generation",
+        "policy_used": "expand",
+        "response_summary": "함수 코드 생성 완료",
+        "context_snapshot": {
+          "detected_languages": [
+            "python"
+          ],
+          "has_code_snippet": true
+        },
+        "relevance_score": 0.0,
+        "feedback": null
+      },
+      {
+        "turn_id": "ee7ad2e382a4_0002",
+        "timestamp": "2026-04-11T20:01:59.092115",
+        "user_input": "그리고 테스트 코드도 작성해줘",
+        "intent_type": "testing",
+        "policy_used": "balance",
+        "response_summary": "테스트 코드 생성 완료",
+        "context_snapshot": {
+          "detected_languages": [
+            "python"
+          ],
+          "has_code_snippet": true
+        },
+        "relevance_score": 0.23333333333333334,
+        "feedback": null
+      },
+      {
+        "turn_id": "ee7ad2e382a4_0003",
+        "timestamp": "2026-04-11T20:01:59.092150",
+        "user_input": "코드 리뷰해줘",
+        "intent_type": "code_review",
+        "policy_used": "refine",
+        "response_summary": "코드 리뷰 완료",
+        "context_snapshot": {
+          "detected_languages": [
+            "python"
+          ],
+          "has_code_snippet": true
+        },
+        "relevance_score": 0.15,
+        "feedback": null
+      }
+    ],
+    "accumulated_context": {
+      "languages": [
+        "python"
+      ],
+      "intent_counts": {
+        "code_generation": 1,
+        "testing": 1,
+        "code_review": 1
+      },
+      "dominant_intent": "code_generation"
+    },
+    "metadata": {
+      "turn_count": 3,
+      "total_tokens": 0,
+      "session_duration_minutes": 0
+    }
   }
 }
