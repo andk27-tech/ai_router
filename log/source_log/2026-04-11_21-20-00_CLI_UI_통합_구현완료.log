@@ -1,0 +1,202 @@
+2026-04-11 21:20:00 - CLI/UI 통합 구현 완료
+=====================================
+
+## Summary
+- CLI/UI integration for AI Router completed
+- Standalone chatbot that connects local AI (Ollama) with log/system checking
+- No server required - direct execution
+- Automatic detection of log/status queries
+- AI-powered analysis and responses
+
+## Files Created/Modified
+
+### New Files
+- Created: cli_chat_standalone.py
+  - Standalone chatbot (no server needed)
+  - Direct Ollama AI connection
+  - Automatic query type detection (log/status/chat)
+  - Real-time system data collection and AI analysis
+  - Interactive CLI interface
+
+- Created: cli_chat.py
+  - Client for server-based chat (requires main_with_logs.py server)
+  - Commands: '로그 보여줘', '상태 어때?', 'health', 'quit'
+
+- Created: main_with_logs.py
+  - FastAPI server with log/system integration
+  - Endpoints: /api/run, /api/health, /api/logs
+  - Automatic query routing (log/status/general)
+
+- Created: run_log_check.py
+  - Direct execution script for one-time log checks
+  - Full pipeline: intent → routing → data collection → AI analysis
+  - Supports custom queries via command line
+
+### Modified Files
+- Modified: core/ai.py
+  - Added set_test_mode(TestMode.LOCAL_AI) support
+  - Real Ollama integration for production use
+
+- Modified: core/test_policy.py
+  - Test mode switching for dummy vs real AI
+
+## Implementation Details
+
+### 1. Standalone Chatbot (cli_chat_standalone.py)
+Features:
+- No server required - runs independently
+- Direct connection to local Ollama AI
+- Three query types automatically detected:
+  * Log queries: '로그', 'log', 'syslog', '에러', 'error'
+  * Status queries: '상태', 'status', 'cpu', '메모리', 'memory', '어때'
+  * General chat: everything else
+
+Query Handling:
+- Log queries: Collect syslog, analyze errors, AI explanation
+- Status queries: CPU, memory, disk info, AI analysis with recommendations
+- General chat: Standard AI conversation
+
+### 2. Server-Based API (main_with_logs.py)
+Endpoints:
+- POST /api/run - Main chat endpoint with auto-routing
+- GET /api/health - Quick system health check
+- POST /api/logs - Direct log access
+
+Auto-Routing Logic:
+```python
+if is_log_related_query(text) → handle_log_query()
+if is_system_status_query(text) → handle_status_query()
+else → general AI chat
+```
+
+### 3. Direct Execution (run_log_check.py)
+Usage:
+```bash
+python3 run_log_check.py "로그 보여줘"
+python3 run_log_check.py "CPU 상태 어때?"
+python3 run_log_check.py "syslog 에러 확인"
+```
+
+Pipeline:
+1. Intent analysis (debugging/analysis classification)
+2. Policy routing (refine/expand/balance selection)
+3. Data collection (syslog, errors, CPU, memory, disk)
+4. AI analysis (Ollama with context-aware prompt)
+5. Korean response generation
+
+## Test Results
+
+### Test 1: Log Query
+Input: "로그 보여줘"
+Output: AI analysis of syslog with recent errors
+- Intent: debugging (0.45 confidence)
+- Policy: refine
+- Data: syslog (30 lines), 6 errors found
+- AI Response: NetworkManager issues explained in Korean
+
+### Test 2: Status Query
+Input: "CPU와 메모리 상태 어때?"
+Output: System status analysis
+- CPU: 25.1% (normal)
+- Memory: 42.3% (8.9 GB available)
+- AI Response: Status healthy, but 3 ollama errors noted
+
+### Test 3: General Chat
+Input: "안녕?"
+Output: General AI greeting response
+
+### Test 4: Health Check
+Input: "health"
+Output: Quick status summary
+- Overall: healthy
+- CPU: 25%, Memory: 42%
+
+## Usage Examples
+
+### Method 1: Standalone (Recommended)
+```bash
+cd /home/lks/ai_router
+python3 cli_chat_standalone.py
+
+👤 You: 로그 보여줘
+🤖 AI: [AI analysis of system logs in Korean]
+```
+
+### Method 2: Server + Client
+Terminal 1:
+```bash
+python3 main_with_logs.py
+```
+
+Terminal 2:
+```bash
+python3 cli_chat.py
+```
+
+### Method 3: Direct Execution
+```bash
+python3 run_log_check.py "로그 확인해줘"
+```
+
+## Integration Points
+- core/intent.py - Intent classification
+- core/intent_integration.py - Policy-based routing
+- core/tools/log_integration_extended.py - Real system log access
+- core/tools/system_tool.py - System metrics collection
+- core/ai.py - Ollama AI connection
+
+## Security Features
+- Read-only log access by default
+- Agent-based permission system
+- Safe command validation in system_integration.py
+- No write permissions to system files
+
+## Git Backup
+- Commit: pending
+- Time: 2026-04-11 21:20:00
+
+## Status
+- CLI/UI Integration: COMPLETE
+- All components tested and working
+- Ready for daily use
+
+## Bug Fixes (2026-04-11 21:45:00)
+
+### Fix 1: DecisionType Import
+**Problem**: `'str' object has no attribute 'value'` error in Decision Engine logging
+
+**Solution**: 
+- Modified: cli_full_integration.py
+- Changed import from `from core.decision import DecisionEngine` to `from core.decision import DecisionEngine, DecisionType`
+
+### Fix 2: Enum Usage
+**Problem**: Passing string `'routing'` instead of Enum to `make_decision()`
+
+**Solution**:
+- Modified: cli_full_integration.py line 141
+- Changed: `decision_type='routing'` → `decision_type=DecisionType.ROUTING`
+
+### Fix 3: Concatenated Word Recognition
+**Problem**: "로그보여줘" not recognized as log query (no spaces)
+
+**Solution**:
+- Modified: `_is_log_query()` method
+- Added space-stripped text check: `text_no_space = text.replace(' ', '').lower()`
+- Added keywords: `'로그보여'`, `'로그확인'`, `'로그분석'`
+
+### Fix 4: Streaming Response (2026-04-11 21:50:00)
+**Problem**: AI 응답이 한 번에 출력되어 기다리는 시간이 긺
+
+**Solution**:
+- Modified: `core/ai.py`
+  - Added `stream` parameter to `ai_call()`
+  - Added `_ai_call_streaming()` function
+  - Real-time line-by-line output using `subprocess.Popen`
+- Modified: `cli_full_integration.py`
+  - Changed `ai_call(prompt)` to `ai_call(prompt, stream=True)`
+  - Output: "🤖 AI 응답 (실시간):"
+
+## Next Steps
+- User acceptance testing
+- Documentation updates
+- Optional: Web UI integration
