@@ -1,0 +1,146 @@
+2026-04-11 20:30:00 - 로그 통합 확장 - 실제 시스템 로그 접근 구현
+=====================================
+
+## Summary
+- Log integration extended with real system log access
+- System logs (/var/log/syslog, daemon, kern, boot, auth, etc.)
+- Process logs (PID, CPU, memory, open files)
+- Agent-based permission management for log access
+- Real-time error analysis from system logs
+
+## Files Created
+- Created: core/tools/log_integration_extended.py
+  - SystemLogIntegration 클래스
+  - 시스템 로그 경로 매핑 (15+ log types)
+  - 에이전트별 권한 관리 (admin, debugger, monitor, default)
+  - 프로세스 로그 추론 및 접근
+  - 실시간 에러 분석 및 분류
+  
+- Created: test_log_integration_real.py
+  - 실제 시스템 로그 접근 테스트
+  - 프로세스 정보 수집 테스트
+  - 권한 관리 테스트
+
+## Features Implemented
+
+### 1. 실제 시스템 로그 접근
+- /var/log/syslog - 시스템 전반 로그
+- /var/log/daemon.log - 데몬 프로세스 로그
+- /var/log/kern.log - 커널 로그
+- /var/log/boot.log - 부팅 로그
+- /var/log/auth.log - 인증 로그 (제한적 접근)
+- 기타: cron, dpkg, apt, apache, nginx, mysql, postgresql, redis, docker, journal
+
+### 2. 에이전트별 권한 관리
+```python
+admin: 모든 로그 접근 가능 (read/write)
+debugger: syslog, kern, daemon, boot, dpkg (read only)
+monitor: syslog, daemon, cron만 (read only, 500 lines)
+default: syslog, daemon, boot만 (read only, 1000 lines)
+```
+
+### 3. 프로세스 로그 접근
+- PID 기반 프로세스 상세 정보
+- 프로세스 이름으로 검색
+- CPU/메모리 사용량 실시간 수집
+- 열린 파일/연결 정보 추적
+- 실행 파일 경로에서 로그 디렉토리 추론
+
+### 4. 실시간 에러 분석
+- syslog 기반 에러 패턴 매칭
+- 심각도별 필터링 (critical, error, warning)
+- 에러 유형 자동 분류:
+  - permission_error (권한 오류)
+  - memory_error (메모리 오류)
+  - disk_error (디스크 오류)
+  - network_error (네트워크 오류)
+  - process_error (프로세스 오류)
+  - general_error (일반 오류)
+
+## Test Results
+1. Grant Permissions: PASSED
+   - test_agent_001 권한 부여 완료
+
+2. System Log Access: PASSED
+   - syslog: 30 lines, 15,234 bytes
+   - daemon: 30 lines
+   - boot: 30 lines
+
+3. Permission Denial: PASSED
+   - unauthorized_agent 접근 차단
+
+4. Process Log Access: PASSED
+   - Top CPU 프로세스: windsurf, python3, gnome-shell
+   - Top Memory 프로세스: Isolated Web Co, windsurf, python3
+   - Total processes: 250+
+
+5. System Error Analysis: PASSED
+   - 1시간 내 에러: 6개
+   - general_error: 3개
+   - process_error: 3개
+   - Status: warning
+
+6. Quick System Log Check: PASSED
+   - Log accessible: True
+   - Recent errors: 6
+   - Status: warning
+
+7. Access Statistics: PASSED
+   - Total accesses: 2
+   - Types: system_log, process_log
+
+8. Different Permission Levels: PASSED
+   - Admin: ✓ (all logs)
+   - Monitor: ✓ (syslog, daemon, cron only)
+
+## Usage Example
+```python
+from core.tools.log_integration_extended import SystemLogIntegration
+
+# 생성
+integration = SystemLogIntegration()
+
+# 권한 부여
+integration.grant_permissions(
+    agent_id='my_agent',
+    log_types=['syslog', 'daemon'],
+    read_only=True,
+    max_lines=500
+)
+
+# 시스템 로그 접근
+result = integration.get_system_log_access(
+    agent_id='my_agent',
+    log_types=['syslog'],
+    lines=100
+)
+
+# 에러 분석
+errors = integration.analyze_system_errors(
+    agent_id='my_agent',
+    hours=1,
+    severity='error'
+)
+```
+
+## Security Features
+- 에이전트별 세분화된 권한
+- 읽기 전용 기본 정책
+- 최대 라인 수 제한
+- 접근 로그 기록 및 감사
+- 권한 상승 없이는 민감 로그 접근 불가
+
+## Integration with Existing System
+- 기존 LogIntegration과 별도로 동작
+- SystemIntegration과 연동 가능
+- 실제 프로세스 및 시스템 데이터 제공
+
+## Git Backup
+- Commit: pending
+- Time: 2026-04-11 20:30:00
+
+## Status
+- Real system log access: COMPLETE
+- Process log integration: COMPLETE
+- Agent-based permissions: COMPLETE
+- Ready for production use
