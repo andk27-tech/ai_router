@@ -2,11 +2,41 @@
 """
 AI Router CLI - Full 1.x Integration
 기존 AI Router의 모든 기능 통합 (다중 에이전트, 평가, 정책 진화, 자가 수정 등)
+
+사용법:
+  python3 cli_full_integration.py              # 기본: 더미 모드 (빠른 테스트)
+  python3 cli_full_integration.py --local-ai   # 로컬 AI 사용 (실제 Ollama)
+  python3 cli_full_integration.py --dummy-1    # 더미 응답 1
+  python3 cli_full_integration.py --dummy-2    # 더미 응답 2
 """
 
 import sys
 import os
+import argparse
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# 테스트 모드 설정 (임포트 전에 설정)
+from core.test_policy import set_test_mode, TestMode
+
+# 명령줄 인자 파싱
+parser = argparse.ArgumentParser(description='AI Router CLI')
+parser.add_argument('--local-ai', action='store_true', help='로컬 AI 사용 (Ollama)')
+parser.add_argument('--dummy-1', action='store_true', help='더미 모드 1')
+parser.add_argument('--dummy-2', action='store_true', help='더미 모드 2')
+parser.add_argument('--test', choices=['local-ai', 'dummy-1', 'dummy-2'], 
+                    help='테스트 모드 선택 (local-ai, dummy-1, dummy-2)')
+args = parser.parse_args()
+
+# 테스트 모드 설정
+if args.local_ai or args.test == 'local-ai':
+    set_test_mode(TestMode.LOCAL_AI)
+    print("🔧 테스트 모드: 로컬 AI (Ollama)")
+elif args.dummy_2 or args.test == 'dummy-2':
+    set_test_mode(TestMode.DUMMY_2)
+    print("🔧 테스트 모드: 더미 응답 2")
+else:
+    set_test_mode(TestMode.DUMMY_1)
+    print("🔧 테스트 모드: 더미 응답 1 (빠른 테스트)")
 
 # 기존 1.x 코어 모듈 임포트
 from core.agents import run_agents

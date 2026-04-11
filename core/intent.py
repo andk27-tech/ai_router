@@ -182,8 +182,15 @@ class IntentParser:
         # 입력 전처리
         processed_input = user_input.lower().strip()
         
-        # 1. 의도 분류
+        # 1. 의도 분류 (공백 제거 버전도 함께 체크)
         intent_type, confidence, keywords = self._classify_intent(processed_input)
+        
+        # 공백 제거한 입력에서도 체크 (연결된 한국어 처리)
+        if intent_type == IntentType.UNKNOWN:
+            no_space_input = processed_input.replace(' ', '')
+            intent_type2, confidence2, keywords2 = self._classify_intent(no_space_input)
+            if intent_type2 != IntentType.UNKNOWN:
+                intent_type, confidence, keywords = intent_type2, confidence2, keywords2
         
         # 2. 컨텍스트 추출
         extracted_context = self._extract_context(processed_input)
