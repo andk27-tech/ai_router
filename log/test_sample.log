@@ -1,0 +1,6 @@
+
+2026-04-11 19:00:00 INFO Starting application
+2026-04-11 19:00:01 ERROR Failed to connect to database
+2026-04-11 19:00:02 WARNING Memory usage high
+2026-04-11 19:00:03 INFO User login successful
+2026-04-11 19:00:04 ERROR File not found

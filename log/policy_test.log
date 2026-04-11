@@ -1,0 +1,6 @@
+
+2026-04-11 20:00:00 INFO Application starting
+2026-04-11 20:00:01 ERROR Database connection failed
+2026-04-11 20:00:02 WARNING Retrying connection
+2026-04-11 20:00:03 INFO Connection established
+2026-04-11 20:00:04 ERROR Query execution failed

@@ -4,10 +4,12 @@ AI 에이전트가 사용할 수 있는 다양한 툴 제공
 """
 
 from .file_tool import get_file_tool, FileTool
+from .log_tool import get_log_tool, LogTool
 
 # 사용 가능한 툴 레지스트리
 AVAILABLE_TOOLS = {
     'file': get_file_tool(),
+    'log': get_log_tool(),
 }
 
 def get_tool(tool_name: str):
