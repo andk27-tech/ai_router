@@ -1,20 +1,31 @@
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import uvicorn
 from core.rag import search, build_full_graph
 from core.ai import ai_call
+import os
 
 app = FastAPI(title="AI Router API", version="1.0")
+
+# 정적 파일 서빙
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
 async def root():
+    return FileResponse('static/index.html')
+
+
+@app.get("/api")
+async def api_info():
     return {
         "message": "AI Router API",
         "version": "1.0",
         "endpoints": {
+            "/": "Chat UI",
             "/api/run": "POST - AI processing endpoint",
-            "/docs": "API documentation (Swagger UI)",
-            "/redoc": "API documentation (ReDoc)"
+            "/docs": "API documentation (Swagger UI)"
         }
     }
 
