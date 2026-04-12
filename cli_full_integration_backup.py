@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
 AI Router CLI - Full 1.x Integration
-Fixed version with concise responses
+기존 AI Router의 모든 기능 통합 (다중 에이전트, 평가, 정책 진화, 자가 수정 등)
+
+사용법:
+  python3 cli_full_integration.py              # 기본: 더미 모드 (빠른 테스트)
+  python3 cli_full_integration.py --local-ai   # 로컬 AI 사용 (실제 Ollama)
+  python3 cli_full_integration.py --dummy-1    # 더미 응답 1
+  python3 cli_full_integration.py --dummy-2    # 더미 응답 2
 """
 
 import sys
@@ -9,33 +15,33 @@ import os
 import argparse
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Test mode setting (before imports)
+# 테스트 모드 설정 (임포트 전에 설정)
 from core.test_policy import set_test_mode, TestMode
 
-# Command line argument parsing
+# 명령줄 인자 파싱
 parser = argparse.ArgumentParser(description='AI Router CLI')
-parser.add_argument('--local-ai', action='store_true', help='Local AI usage (Ollama)')
-parser.add_argument('--dummy-1', action='store_true', help='Dummy mode 1')
-parser.add_argument('--dummy-2', action='store_true', help='Dummy mode 2')
+parser.add_argument('--local-ai', action='store_true', help='로컬 AI 사용 (Ollama)')
+parser.add_argument('--dummy-1', action='store_true', help='더미 모드 1')
+parser.add_argument('--dummy-2', action='store_true', help='더미 모드 2')
 parser.add_argument('--test', choices=['local-ai', 'dummy-1', 'dummy-2'], 
-                    help='Test mode selection (local-ai, dummy-1, dummy-2)')
+                    help='테스트 모드 선택 (local-ai, dummy-1, dummy-2)')
 args = parser.parse_args()
 
-# Test mode setting
+# 테스트 모드 설정
 if args.local_ai or args.test == 'local-ai':
     set_test_mode(TestMode.LOCAL_AI)
-    print("Test mode: Local AI (Ollama)")
+    print("🔧 테스트 모드: 로컬 AI (Ollama)")
 elif args.dummy_1 or args.test == 'dummy-1':
     set_test_mode(TestMode.DUMMY_1)
-    print("Test mode: Dummy response 1")
+    print("🔧 테스트 모드: 더미 응답 1")
 elif args.dummy_2 or args.test == 'dummy-2':
     set_test_mode(TestMode.DUMMY_2)
-    print("Test mode: Dummy response 2")
+    print("🔧 테스트 모드: 더미 응답 2")
 else:
-    set_test_mode(TestMode.LOCAL_AI)  # Default: local AI
-    print("Test mode: Local AI (Ollama) - default")
+    set_test_mode(TestMode.LOCAL_AI)  # 기본: 로컬 AI
+    print("🔧 테스트 모드: 로컬 AI (Ollama) - 기본값")
 
-# Core 1.x modules import
+# 기존 1.x 코어 모듈 임포트
 from core.agents import run_agents
 from core.evaluator import evaluate
 from core.memory import save, get_recent
@@ -43,7 +49,7 @@ from core.reward import calc_reward
 from core.policy_evolve import next_generation
 from core.rag import search, build_full_graph
 
-# New intelligence/tool layer imports
+# 새로운 지능/툴 레이어 임포트
 from core.intent import IntentParser
 from core.intent_integration import IntentBasedRouter
 from core.decision import DecisionEngine, DecisionType
@@ -56,31 +62,31 @@ from core.ai import ai_call
 from core.test_policy import set_test_mode, TestMode
 
 class AIFullRouterCLI:
-    """AI Router CLI - Complete integration version"""
+    """AI Router CLI - 완전 통합 버전"""
     
     def __init__(self):
-        # Test mode maintenance (set by command line args)
+        # 테스트 모드 유지 (명령줄 인자에서 설정된 모드)
         from core.test_policy import get_current_mode
         current_mode = get_current_mode()
-        print(f"Current test mode: {current_mode}")
+        print(f"✅ 현재 테스트 모드: {current_mode}")
         
-        # Reset policy weights for clean testing
+        # 정책 가중치 초기화 (클린 테스트를 위한 초기화)
         self._reset_policy_weights()
         
-        # 1.x Basic system initialization (function based)
+        # 1.x 기초 시스템 초기화 (함수 기반)
         
-        # Intelligence layer initialization
+        # 지능 레이어 초기화
         self.intent_parser = IntentParser()
         self.intent_router = IntentBasedRouter()
         self.decision_engine = DecisionEngine()
         self.context_tracker = ContextTracker()
         
-        # Tool layer initialization
+        # 툴 레이어 초기화
         self.log_integration = SystemLogIntegration()
         self.system_tool = SystemTool()
         self.file_tool = FileTool()
         
-        # Permission settings
+        # 권한 설정
         self.log_integration.grant_permissions(
             agent_id='cli_full',
             log_types=['syslog', 'daemon', 'kern', 'boot'],
@@ -88,13 +94,13 @@ class AIFullRouterCLI:
             max_lines=200
         )
         
-        # Session settings
+        # 세션 설정
         self.session_id = self.context_tracker.create_session("cli_session")
         self.conversation_turn = 0
         
-        print("AI Router Full Integration initialization complete")
-        print(f"   - Session ID: {self.session_id}")
-        print(f"   - Multi-agent: refine/balance/expand (run_agents)")
+        print("✅ AI Router Full Integration 초기화 완료")
+        print(f"   - 세션 ID: {self.session_id}")
+        print(f"   - 다중 에이전트: refine/balance/expand (run_agents)")
         print(f"   - Available tools: log, system, file")
     
     def _reset_policy_weights(self):
@@ -110,60 +116,60 @@ class AIFullRouterCLI:
     
     def process_with_full_pipeline(self, user_input: str) -> str:
         """
-        Complete AI Router pipeline processing
+        완전한 AI Router 파이프라인으로 처리
         
-        1. Intent analysis (Intent Parser)
-        2. Intent integration (Intent Integration - routing)
-        3. Context management (Context Tracker)
-        4. Multi-agent competition (Agents)
-        5. Decision engine (Decision Engine)
-        6. Tool execution (Log/System/File)
-        7. Evaluation system (Evaluator)
-        8. Memory storage (Memory)
-        9. Reward calculation (Reward)
-        10. AI response generation
+        1. 의도 분석 (Intent Parser)
+        2. 의도 통합 (Intent Integration - 라우팅)
+        3. 컨텍스트 관리 (Context Tracker)
+        4. 다중 에이전트 경쟁 (Agents)
+        5. 의사결정 엔진 (Decision Engine)
+        6. 툴 실행 (Log/System/File)
+        7. 평가 시스템 (Evaluator)
+        8. 메모리 저장 (Memory)
+        9. 보상 계산 (Reward)
+        10. AI 응답 생성
         """
         self.conversation_turn += 1
         print(f"\n{'='*60}")
-        print(f"Turn {self.conversation_turn}: {user_input[:50]}...")
+        print(f"🔄 턴 {self.conversation_turn}: {user_input[:50]}...")
         print(f"{'='*60}")
         
-        # 1. Intent analysis
-        print("\n1. Intent analysis (Intent Parser)")
+        # 1. 의도 분석
+        print("\n1️⃣ 의도 분석 (Intent Parser)")
         intent = self.intent_parser.parse(user_input)
-        print(f"   Intent: {intent.intent_type.value} (confidence: {intent.confidence:.2f})")
-        print(f"   Keywords: {intent.keywords[:3]}")
+        print(f"   의도: {intent.intent_type.value} (신뢰도: {intent.confidence:.2f})")
+        print(f"   키워드: {intent.keywords[:3]}")
         
-        # 2. Intent integration (routing)
-        print("\n2. Intent integration (Intent Integration)")
+        # 2. 의도 통합 (라우팅)
+        print("\n2️⃣ 의도 통합 (Intent Integration)")
         routing = self.intent_router.recognize_intent_and_route(user_input)
         selected_policy = routing['routing']['selected_policy']
-        print(f"   Selected policy: {selected_policy}")
-        print(f"   Routing confidence: {routing['routing']['confidence']:.2f}")
+        print(f"   선택된 정책: {selected_policy}")
+        print(f"   라우팅 신뢰도: {routing['routing']['confidence']:.2f}")
         
-        # 3. Context management
-        print("\n3. Context management (Context Tracker)")
+        # 3. 컨텍스트 관리
+        print("\n3️⃣ 컨텍스트 관리 (Context Tracker)")
         session_info = self.context_tracker.get_session_info(self.session_id)
         if session_info:
-            print(f"   Session turn count: {session_info.get('turn_count', 0)}")
+            print(f"   세션 턴 수: {session_info.get('turn_count', 0)}")
         
-        # 4. Multi-agent competition
-        print("\n4. Multi-agent competition (Agents)")
+        # 4. 다중 에이전트 경쟁
+        print("\n4. 다중 에이전트 경쟁 (Agents)")
         available_agents = ['refine', 'balance', 'expand']
         agent_scores = {}
         
         for agent_policy in available_agents:
-            # Policy-based score calculation
+            # 정책별 점수 계산
             score = self._calculate_agent_score(agent_policy, intent, selected_policy)
             agent_scores[agent_policy] = score
-            print(f"   {agent_policy}: {score:.2f} points")
+            print(f"   {agent_policy}: {score:.2f}점")
         
-        # Legacy winner for comparison
+        # 4.1 Legacy winner for comparison
         legacy_winner = max(agent_scores, key=agent_scores.get)
         legacy_score = agent_scores[legacy_winner]
         print(f"   Legacy winner: {legacy_winner} ({legacy_score:.2f} points)")
         
-        # Real run_agents execution with improved system
+        # 4.2 Real run_agents execution with improved system (Core 1.x + Improvements)
         print("\n4.2 Real Multi-Agent Competition (Enhanced)")
         try:
             print("   Executing run_agents() with improved evaluation...")
@@ -190,7 +196,7 @@ class AIFullRouterCLI:
             print(f"   Fallback to legacy: {winner} ({winner_score:.2f} points)")
         
         # 5. Intent-based routing (FIXED - Use intent properly)
-        print("\n5. Intent-based routing (Fixed)")
+        print("\n5. Intent-based Routing (Fixed)")
         
         # Use intent for proper routing
         tool_result = None
@@ -223,75 +229,75 @@ class AIFullRouterCLI:
         print(f"   Decision Engine result: {decision.chosen_option} (confidence: {decision.confidence:.2f})")
         print(f"   (Note: Using intent-based routing instead)")
         
-        # 7. Evaluation system
-        print("\n7. Evaluation system (Evaluator)")
-        # Simple evaluation
+        # 7. 평가 시스템
+        print("\n7️⃣ 평가 시스템 (Evaluator)")
+        # 간단한 평가
         if tool_result:
             score = 8.5 if tool_result.get('success', False) else 5.0
-            print(f"   Score: {score}/10")
+            print(f"   점수: {score}/10")
         
-        # 8. Memory storage (DISABLED for clean testing)
-        print("\n8. Memory storage (DISABLED)")
+        # 8.1 Memory storage (DISABLED for clean testing)
+        print("\n8.1 Memory Storage (DISABLED)")
         # self._save_to_memory(user_input, tool_result, winner)  # Temporarily disabled
         print("   Storage skipped for clean testing")
         
-        # 9. Reward calculation
-        print("\n9. Reward calculation (Reward)")
+        # 9. 보상 계산
+        print("\n9️⃣ 보상 계산 (Reward)")
         if tool_result and tool_result.get('score'):
             reward = calc_reward(tool_result.get('score', 0))
-            print(f"   Reward score: {reward:.2f}")
+            print(f"   보상 점수: {reward:.2f}")
         else:
-            print("   Reward: default")
+            print("   보상: 기본값")
         
-        # 10. AI response generation (CONCISE)
-        print("\n10. AI response generation (Concise)")
-        response = self._generate_concise_response(user_input, tool_result, winner)
+        # 10. AI 응답 생성
+        print("\n🔟 AI 응답 생성 (Ollama)")
+        response = self._generate_ai_response(user_input, tool_result, winner)
         
-        # Turn save
+        # 턴 저장
         self._save_conversation_turn(user_input, response, winner, tool_result)
         
         return response
     
     def _is_log_query(self, text):
-        # Search in text without spaces too
+        # 공백 제거한 텍스트에서도 검색
         text_no_space = text.replace(' ', '').lower()
-        keywords = ['log', 'syslog', 'error', 'error', 'log show', 'log check', 'log analysis']
-        # Search both original and space-removed versions
+        keywords = ['로그', 'log', 'syslog', '에러', 'error', '로그보여', '로그확인', '로그분석']
+        # 공백 있는 원본과 제거한 버전 모두 검색
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)
     
     def _is_status_query(self, text):
-        # Search in text without spaces too
+        # 공백 제거한 텍스트에서도 검색
         text_no_space = text.replace(' ', '').lower()
         keywords = [
-            'status', 'status', 'cpu', 'memory', 'memory', 'how',
-            'system', 'system', 'resource', 'resource', 'usage',
-            'system status', 'status check', 'cpu usage', 'memory usage',
-            'load', 'load', 'performance', 'performance'
+            '상태', 'status', 'cpu', '메모리', 'memory', '어때',
+            '시스템', 'system', '리소스', 'resource', '사용량',
+            '시스템상태', '상태확인', 'cpu사용량', '메모리사용량',
+            '부하', 'load', '성능', 'performance'
         ]
-        # Search both original and space-removed versions
+        # 공백 있는 원본과 제거한 버전 모두 검색
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)
     
     def _calculate_agent_score(self, agent_policy, intent, selected_policy):
-        """Agent score calculation"""
+        """에이전트 점수 계산"""
         base_score = 5.0
         
-        # Policy match bonus
+        # 정책 일치 보너스
         if agent_policy == selected_policy:
             base_score += 3.0
         
-        # Intent-based bonus
+        # 의도 기반 보너스
         if intent.intent_type.value in ['debugging', 'analysis'] and agent_policy == 'refine':
             base_score += 1.5
         elif intent.intent_type.value in ['question', 'explanation'] and agent_policy == 'expand':
             base_score += 1.5
         
-        # Confidence weighting
+        # 신뢰도 가중치
         base_score *= intent.confidence
         
         return min(10.0, base_score)
     
     def _execute_log_tool(self, user_input):
-        """Log tool execution"""
+        """로그 툴 실행"""
         result = self.log_integration.get_system_log_access(
             agent_id='cli_full',
             log_types=['syslog'],
@@ -313,7 +319,7 @@ class AIFullRouterCLI:
         }
     
     def _execute_system_tool(self, user_input):
-        """System tool execution"""
+        """시스템 툴 실행"""
         cpu = self.system_tool.get_cpu_info()
         memory = self.system_tool.get_memory_info()
         disk = self.system_tool.get_disk_info()
@@ -327,7 +333,7 @@ class AIFullRouterCLI:
         }
     
     def _save_to_memory(self, user_input, result, winner):
-        """Save to memory"""
+        """메모리에 저장"""
         try:
             from datetime import datetime
             entry = {
@@ -342,61 +348,18 @@ class AIFullRouterCLI:
             pass
     
     def _calculate_reward(self, tool_result):
-        """Reward calculation"""
+        """보상 계산"""
         score = tool_result.get('score', 0) if tool_result else 0
         return calc_reward(score)
     
-    def _generate_concise_response(self, user_input, tool_result, winner):
-        """Generate concise AI response (2-3 lines max)"""
-        # Build context
-        context_parts = [f"Winner agent: {winner}"]
+    def _generate_ai_response(self, user_input, tool_result, winner):
+        """AI 응답 생성 (스트리밍)"""
+        # 프롬프트 구성
+        context_parts = [f"승자 에이전트: {winner}"]
         
         if tool_result:
             if tool_result.get('type') == 'log':
-                context_parts.append(f"Log analysis:")
-                context_parts.append(f"- Recent errors: {tool_result.get('errors', 0)}")
-                context_parts.append(f"- Error types: {tool_result.get('error_types', {})}")
-            elif tool_result.get('type') == 'system':
-                cpu = tool_result.get('cpu', {})
-                mem = tool_result.get('memory', {})
-                context_parts.append(f"System status:")
-                context_parts.append(f"- CPU: {cpu.get('percent', 0)}% ({cpu.get('status', 'unknown')})")
-                context_parts.append(f"- Memory: {mem.get('percent_used', 0)}% used")
-        
-        # Concise prompt
-        prompt = f"""User: {user_input}
-
-AI Router analysis:
-{chr(10).join(context_parts)}
-
-Provide a concise Korean response in 2-3 lines maximum.
-Focus on key information and solutions if needed."""
-        
-        try:
-            # Test mode check
-            from core.test_policy import get_test_policy
-            test_policy = get_test_policy()
-            is_dummy = test_policy.should_use_dummy()
-            current_mode = test_policy.get_test_mode()
-            print(f"\n[Debug] Test mode: {current_mode}, dummy: {is_dummy}")
-            
-            # AI prompt display
-            print(f"\nAI prompt ({len(prompt)} chars):")
-            print("-" * 40)
-            print(prompt[:200] + "..." if len(prompt) > 200 else prompt)
-            print("-" * 40)
-            
-            print("\nAI response (real-time):\n")
-            print("   ", end='', flush=True)  # Indentation
-            
-            # Streaming AI call
-            response = ai_call(prompt, stream=True)
-            return response
-        except Exception as e:
-            return f"Sorry, error occurred during response generation: {str(e)[:100]}"
-    
-    def _save_conversation_turn(self, user_input, response, winner, tool_result):
-        """Save conversation turn"""
+        """대화 턴 저장"""
         try:
             from datetime import datetime
             self.context_tracker.add_conversation_turn(
@@ -414,47 +377,47 @@ Focus on key information and solutions if needed."""
             pass
     
     def show_statistics(self):
-        """Show statistics"""
+        """통계 표시"""
         print(f"\n{'='*60}")
-        print("AI Router Statistics")
+        print("📊 AI Router 통계")
         print(f"{'='*60}")
         
-        # Session info
+        # 세션 정보
         info = self.context_tracker.get_session_info(self.session_id)
         if info:
-            print(f"Session ID: {info['session_id']}")
-            print(f"Conversation turns: {info['turn_count']}")
+            print(f"세션 ID: {info['session_id']}")
+            print(f"대화 턴: {info['turn_count']}")
         
-        print(f"Total conversation turns: {self.conversation_turn}")
+        print(f"총 대화 턴: {self.conversation_turn}")
         print(f"{'='*60}\n")
     
     def run(self):
-        """Main execution loop"""
+        """메인 실행 루프"""
         print("\n" + "="*60)
-        print("AI Router CLI - Full Integration")
+        print("🤖 AI Router CLI - Full Integration")
         print("="*60)
-        print("All 1.x features integrated:")
-        print("  - Multi-agent competition (refine/balance/expand)")
-        print("  - Evaluation system (1-10 points)")
-        print("  - Memory & reward system")
-        print("  - Intent analysis & routing")
-        print("  - Log/system tools")
-        print("\nCommands:")
-        print("  'log show'  - System log analysis")
-        print("  'status?'   - System status check")
-        print("  'stats'     - Show statistics")
-        print("  'quit'      - Exit")
+        print("모든 1.x 기능 통합:")
+        print("  - 다중 에이전트 경쟁 (refine/balance/expand)")
+        print("  - 평가 시스템 (1-10점)")
+        print("  - 메모리 & 보상 시스템")
+        print("  - 의도 분석 및 라우팅")
+        print("  - 로그/시스템 툴")
+        print("\n명령어:")
+        print("  '로그 보여줘'  - 시스템 로그 분석")
+        print("  '상태 어때?'   - 시스템 상태 확인")
+        print("  'stats'        - 통계 보기")
+        print("  'quit'         - 종료")
         print("="*60 + "\n")
         
         while True:
             try:
-                user_input = input("You: ").strip()
+                user_input = input("👤 You: ").strip()
                 
                 if not user_input:
                     continue
                 
                 if user_input.lower() in ['quit', 'exit', 'q']:
-                    print("\nGoodbye!")
+                    print("\n👋 안녕히 가세요!")
                     self.show_statistics()
                     break
                 
@@ -462,17 +425,17 @@ Focus on key information and solutions if needed."""
                     self.show_statistics()
                     continue
                 
-                # Complete pipeline processing
+                # 완전 파이프라인으로 처리
                 response = self.process_with_full_pipeline(user_input)
-                print(f"\nAI: {response}\n")
+                print(f"\n🤖 AI: {response}\n")
                 
             except KeyboardInterrupt:
-                print("\n\nGoodbye!")
+                print("\n\n👋 안녕히 가세요!")
                 break
             except EOFError:
                 break
             except Exception as e:
-                print(f"\nError occurred: {e}\n")
+                print(f"\n❌ 오류 발생: {e}\n")
 
 if __name__ == "__main__":
     from datetime import datetime

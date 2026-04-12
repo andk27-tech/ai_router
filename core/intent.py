@@ -28,6 +28,7 @@ class IntentType(Enum):
     INTEGRATION = "integration"              # 통합/연동
     DEPLOYMENT = "deployment"                # 배포
     MAINTENANCE = "maintenance"              # 유지보수
+    STATUS = "status"                        # 시스템 상태 확인
     UNKNOWN = "unknown"                      # 알 수 없음
 
 
@@ -120,12 +121,34 @@ class IntentParser:
             ],
             IntentType.DEPLOYMENT: [
                 r'배포|deploy|릴리스|release|운영|production|서버.*올|빌드|build',
-                r'설치|install|배치|distribution|publish|go.*live'
+                r'설치|install|배치|distribution|publish|go.*live',
+                r'배포.*설정|배포.*환경|배포.*서버|배포.*클라우드',
+                r'배포.*도구|배포.*자동화|배포.*스크립트'
             ],
             IntentType.MAINTENANCE: [
-                r'유지보수|maintenance|업데이트|update|패치|patch|보안.*수정|security',
-                r'모니터링|monitoring|로그.*확인|로그|log|syslog|백업|backup|복구|restore',
-                r'상태|status|시스템|system|cpu|메모리|memory|리소스|resource|확인|보여|체크|check'
+                r'유지보수|점검|수리|복구|백업|패치|업데이트',
+                r'로그|로그분석|로그확인|시스템로그|에러|오류|문제|장애',
+                r' maintenance|update|patch|security.*fix|security',
+                r'monitoring|log.*check|log|syslog|backup|restore|repair',
+                r'fix|repair|debug|troubleshoot|issue|problem',
+                r'.*log|.*syslog|.*backup|.*restore|.*repair',
+                r'.*fix|.*debug|.*troubleshoot|.*issue|.*problem'
+            ],
+            IntentType.STATUS: [
+                r'상태|시스템|CPU|메모리|사용량|성능|리소스',
+                r'스테이터스|스테이터스|컨디션|하드웨어',
+                r'확인|보여|체크|조회|어때|어떻게|어떤',
+                r'status|state|condition',
+                r'system|cpu|memory|resource|performance',
+                r'check|show|display|monitor|how.*is|what.*is',
+                r'usage|load|health|running|operating',
+                r'.*status|.*state|.*condition',
+                r'.*system|.*cpu|.*memory|.*resource|.*performance',
+                r'.*check|.*show|.*display|.*monitor|.*how.*is|.*what.*is',
+                r'.*usage|.*load|.*health|.*running|.*operating'
+            ],
+            IntentType.UNKNOWN: [
+                r'unknown'
             ]
         }
         
