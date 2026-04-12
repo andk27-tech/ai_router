@@ -1,0 +1,42 @@
+================================================================================
+타임스탬프: 2026-04-12_11-16-00
+작업명: 정책대로 수정한거 - CLI 출력 한글화 및 버그수정
+================================================================================
+
+[수정된 파일 목록]
+1. /home/lks/ai_router/core/intent.py
+   - IntentType.STATUS 패턴에 한글 키워드 추가
+   - IntentType.MAINTENANCE 패턴에 한글 키워드 추가
+
+2. /home/lks/ai_router/cli_full_integration.py
+   - process_with_full_pipeline() 메서드 내 모든 print 출력 한글화
+
+[상세 작업 내용]
+
+1. intent.py - Intent 키워드 한글 추가
+   - STATUS 의도:
+     * 추가: 상태|시스템|CPU|메모리|사용량|성능|리소스
+     * 추가: 확인|보여|체크|조회|어때|어떻게|어떤
+   
+   - MAINTENANCE 의도:
+     * 추가: 유지보수|점검|수리|복구|백업|패치|업데이트
+     * 추가: 로그|로그분석|로그확인|시스템로그|에러|오류|문제|장애
+
+2. cli_full_integration.py - CLI 출력 한글화
+   - "Intent analysis" → "의도 분석"
+   - "Intent integration" → "의도 통합"
+   - "Context management" → "컨텍스트 관리"
+   - "Multi-agent competition" → "다중 에이전트 경쟁"
+   - "Decision Engine" → "의사결정 엔진"
+   - "Evaluation system" → "평가 시스템"
+   - "Memory storage" → "메모리 저장"
+   - "Reward calculation" → "보상 계산"
+   - "AI response generation" → "AI 응답 생성"
+
+[Git Commit 정보]
+- Commit Hash: 5f26042
+- Commit Message: 정책대로 수정한거 - CLI 출력 한글화 및 버그수정
+- Branch: main
+- Status: origin/main보다 4 commits ahead
+
+================================================================================

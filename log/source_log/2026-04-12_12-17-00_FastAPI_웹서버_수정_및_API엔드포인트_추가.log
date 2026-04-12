@@ -1,0 +1,55 @@
+================================================================================
+타임스탬프: 2026-04-12_12-17-00
+작업명: FastAPI 웹서버 수정 및 API 엔드포인트 추가
+================================================================================
+
+[수정된 파일 목록]
+1. /home/lks/ai_router/main.py
+
+[상세 작업 내용]
+
+1. FastAPI 서버 실행 코드 추가
+   - uvicorn import 추가
+   - 서버 시작 코드 추가: uvicorn.run(app, host="0.0.0.0", port=8000)
+   - 외부 접속 가능 (0.0.0.0 바인딩)
+
+2. Import 오류 수정
+   - 변경: from core.ai import ask_llm
+   - 변경: from core.ai import ai_call
+   - ai_call() 함수 호출 방식으로 수정
+
+3. 기본 페이지 (루트 엔드포인트) 추가
+   - GET / 엔드포인트 추가
+   - API 정보 및 사용 가능 엔드포인트 목록 반환
+   - JSON 형식 응답
+
+4. API 엔드포인트 구성
+   - GET  /          - API 정보 페이지
+   - POST /api/run   - AI 처리 엔드포인트
+   - GET  /docs      - Swagger UI 문서
+   - GET  /redoc     - ReDoc 문서
+
+[사용 방법]
+
+1. 서버 실행
+   cd ~/ai_router && source venv/bin/activate && python3 main.py
+
+2. 로컬 테스트
+   curl -X POST http://localhost:8000/api/run \
+     -H "Content-Type: application/json" \
+     -d '{"data": "하이"}'
+
+3. 모바일에서 접속 (같은 WiFi)
+   http://<PC_IP>:8000/
+   http://<PC_IP>:8000/docs
+
+[테스트 결과]
+- ✅ 로컬 접속 정상 작동 (localhost:8000)
+- ✅ 기본 페이지 정상 출력
+- ✅ API 문서 페이지 접속 가능 (/docs)
+- ⚠️ 외부 IP 접속 시 방화벽 확인 필요 (ufw allow 8000)
+
+[Git Commit]
+- 추후 commit 예정
+
+================================================================================
