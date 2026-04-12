@@ -14,7 +14,12 @@ class TestMode(Enum):
 class TestPolicy:
     """테스트 정책 관리 클래스"""
     
-    def __init__(self, mode: TestMode = TestMode.DUMMY_1):
+    def __init__(self, mode: TestMode = None):
+        # 환경 변수에서 모드 읽기 (모듈 간 공유용)
+        import os
+        env_mode = os.environ.get('AI_ROUTER_TEST_MODE', 'dummy_1')
+        if mode is None:
+            mode = TestMode(env_mode)
         self.mode = mode
         self.test_count = 0
         
@@ -95,6 +100,8 @@ def get_test_policy():
 
 def set_test_mode(mode: TestMode):
     """테스트 모드 설정"""
+    import os
+    os.environ['AI_ROUTER_TEST_MODE'] = mode.value
     test_policy.set_test_mode(mode)
 
 def get_current_mode():

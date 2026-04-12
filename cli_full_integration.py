@@ -31,12 +31,15 @@ args = parser.parse_args()
 if args.local_ai or args.test == 'local-ai':
     set_test_mode(TestMode.LOCAL_AI)
     print("🔧 테스트 모드: 로컬 AI (Ollama)")
+elif args.dummy_1 or args.test == 'dummy-1':
+    set_test_mode(TestMode.DUMMY_1)
+    print("🔧 테스트 모드: 더미 응답 1")
 elif args.dummy_2 or args.test == 'dummy-2':
     set_test_mode(TestMode.DUMMY_2)
     print("🔧 테스트 모드: 더미 응답 2")
 else:
-    set_test_mode(TestMode.DUMMY_1)
-    print("🔧 테스트 모드: 더미 응답 1 (빠른 테스트)")
+    set_test_mode(TestMode.LOCAL_AI)  # 기본: 로컬 AI
+    print("🔧 테스트 모드: 로컬 AI (Ollama) - 기본값")
 
 # 기존 1.x 코어 모듈 임포트
 from core.agents import run_agents
@@ -62,8 +65,10 @@ class AIFullRouterCLI:
     """AI Router CLI - 완전 통합 버전"""
     
     def __init__(self):
-        # 실제 AI 사용
-        set_test_mode(TestMode.LOCAL_AI)
+        # 테스트 모드 유지 (명령줄 인자에서 설정된 모드)
+        from core.test_policy import get_current_mode
+        current_mode = get_current_mode()
+        print(f"✅ 현재 테스트 모드: {current_mode}")
         
         # 1.x 기초 시스템 초기화 (함수 기반)
         
@@ -335,6 +340,19 @@ AI Router 분석 결과:
 시스템 문제가 있으면 해결책도 제안해주세요."""
         
         try:
+            # 테스트 모드 확인
+            from core.test_policy import get_test_policy
+            test_policy = get_test_policy()
+            is_dummy = test_policy.should_use_dummy()
+            current_mode = test_policy.get_test_mode()
+            print(f"\n🔍 [디버그] 테스트 모드: {current_mode}, 더미모드: {is_dummy}")
+            
+            # AI에 전달되는 프롬프트 표시
+            print(f"\n📤 AI에 전달되는 프롬프트 ({len(prompt)} 글자):")
+            print("-" * 60)
+            print(prompt[:500] + "..." if len(prompt) > 500 else prompt)
+            print("-" * 60)
+            
             print("\n🤖 AI 응답 (실시간):\n")
             print("   ", end='', flush=True)  # 들여쓰기
             

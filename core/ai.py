@@ -21,11 +21,19 @@ def ai_call(prompt: str, policy: str = None, stream: bool = False,
     """
     test_policy = get_test_policy()
     
+    # 디버그: 테스트 모드 확인
+    print(f"[DEBUG ai_call] mode: {test_policy.get_test_mode()}, should_dummy: {test_policy.should_use_dummy()}")
+    
     # 더미 테스트 모드인 경우
     if test_policy.should_use_dummy():
         response = test_policy.get_dummy_response(prompt, policy)
-        if stream and callback:
-            callback(response)
+        if stream:
+            # 스트리밍 모드: 더미 응답도 한 글자씩 출력
+            for char in response:
+                print(char, end='', flush=True)
+                import time
+                time.sleep(0.01)  # 10ms 지연으로 스트리밍 효과
+            print()  # 마지막 개행
         return response
     
     # 스트리밍 모드

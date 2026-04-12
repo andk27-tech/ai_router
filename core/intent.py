@@ -124,7 +124,8 @@ class IntentParser:
             ],
             IntentType.MAINTENANCE: [
                 r'유지보수|maintenance|업데이트|update|패치|patch|보안.*수정|security',
-                r'모니터링|monitoring|로그.*확인|백업|backup|복구|restore'
+                r'모니터링|monitoring|로그.*확인|로그|log|syslog|백업|backup|복구|restore',
+                r'상태|status|시스템|system|cpu|메모리|memory|리소스|resource|확인|보여|체크|check'
             ]
         }
         
