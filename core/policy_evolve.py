@@ -56,14 +56,14 @@ def next_generation(winner_policy):
         hybrid_policy = f"{hybrid_base1}_{hybrid_base2}_hybrid"
         policies.append(hybrid_policy)
     
-    # 중복 제거하고 최소 3개 보장
+    # 중복 제거하고 최소 2개 보장
     unique_policies = list(set(policies))
     while len(unique_policies) < 3:
         fallback = random.choice(base_policies)
         if fallback not in unique_policies:
             unique_policies.append(fallback)
     
-    return unique_policies[:4]  # 최대 4개 정책 반환
+    return unique_policies[:2]  # 최대 2개 정책 반환 (속도 최적화)
 
 # 전역 변수로 진화 기록 추적
 _evolution_count = 0
@@ -85,6 +85,6 @@ def update_policy_stats(new_policies, winner):
     """정책 통계 업데이트"""
     global _evolution_count, _current_policies, _latest_policy
     
-    _current_policies = new_policies[:4]  # 최대 4개만 저장
+    _current_policies = new_policies[:2]  # 최대 4개만 저장
     _latest_policy = winner
     _evolution_count += 1
