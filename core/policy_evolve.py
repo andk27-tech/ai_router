@@ -64,3 +64,27 @@ def next_generation(winner_policy):
             unique_policies.append(fallback)
     
     return unique_policies[:4]  # 최대 4개 정책 반환
+
+# 전역 변수로 진화 기록 추적
+_evolution_count = 0
+_current_policies = ["refine", "balance", "expand", "expand_deep"]
+_latest_policy = "balance"
+
+def get_policy_stats():
+    """정책 진화 통계 정보"""
+    global _evolution_count, _current_policies, _latest_policy
+    
+    return {
+        'policy_count': len(_current_policies),
+        'evolution_count': _evolution_count,
+        'latest_policy': _latest_policy,
+        'current_policies': _current_policies.copy()
+    }
+
+def update_policy_stats(new_policies, winner):
+    """정책 통계 업데이트"""
+    global _evolution_count, _current_policies, _latest_policy
+    
+    _current_policies = new_policies[:4]  # 최대 4개만 저장
+    _latest_policy = winner
+    _evolution_count += 1

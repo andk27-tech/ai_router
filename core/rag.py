@@ -9,7 +9,29 @@ IGNORE_DIRS = {
 }
 
 def search(query: str):
-    return {"query": query, "result": []}
+    """RAG 검색 - 코드베이스에서 관련 정보 찾기"""
+    graph = build_full_graph()
+    results = []
+    
+    query_lower = query.lower()
+    query_keywords = query_lower.split()
+    
+    # 파일명과 함수 검색
+    for file_path, functions in graph.items():
+        file_name = os.path.basename(file_path).lower()
+        
+        # 파일명 매칭
+        if any(keyword in file_name for keyword in query_keywords):
+            results.append(f"File: {os.path.basename(file_path)} ({len(functions)} functions)")
+        
+        # 함수명 매칭
+        matching_functions = [func for func in functions 
+                             if any(keyword in func.lower() for keyword in query_keywords)]
+        
+        if matching_functions:
+            results.append(f"Functions in {os.path.basename(file_path)}: {', '.join(matching_functions[:3])}")
+    
+    return {"query": query, "result": results[:5]}  # 상위 5개 결과만
 
 
 def build_full_graph():
