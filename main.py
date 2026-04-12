@@ -8,6 +8,9 @@ from fastapi.responses import FileResponse
 import uvicorn
 from core.rag import search, build_full_graph
 from core.ai import ai_call
+from core.memory import save as memory_save, get_success, get_recent
+from core.reward import calc_reward
+from core.policy_evolve import next_generation
 
 app = FastAPI(title="AI Router API", version="1.0")
 
@@ -55,19 +58,55 @@ async def run(req: Request):
     body = await req.json()
     data = body.get("data", "")
 
-    graph = build_full_graph()
+    # Build simplified prompt for faster response
     ctx = search(data)
-
-    # Build prompt for AI
-    prompt = f"Input: {data}\nContext: {ctx}\nCall Graph: {graph}"
+    # Limit context to 200 characters for speed
+    limited_ctx = ctx[:200] if len(ctx) > 200 else ctx
+    prompt = f"User: {data}\n{limited_ctx}"
     
-    # 비동기 호출 with 30초 타임아웃 (Ollama가 느림)
-    result = await ai_call_async(prompt, policy="balance", timeout=30)
+    # 15s timeout (reduced from 30s)
+    result = await ai_call_async(prompt, policy="balance", timeout=15)
+    
+    # 학습 시스템: 결과 저장
+    memory_save({
+        "input": data,
+        "output": result,
+        "score": 10,  # 기본 점수
+        "policy": "balance",
+        "timestamp": __import__('datetime').datetime.now().isoformat()
+    })
+    
+    # 성공 사례 확인
+    success_cases = get_success()
+    
+    # 정책 진화 준비 (다음 요청 시 사용)
+    if success_cases:
+        latest_winner = success_cases[-1].get("policy", "balance")
+        next_policies = next_generation(latest_winner)
 
     return {
         "status": "success",
         "type": "chat",
-        "result": result
+        "result": result,
+        "learning": {
+            "memory_saved": True,
+            "success_cases": len(success_cases),
+            "latest_policy": "balance"
+        }
+    }
+
+
+@app.get("/api/memory")
+async def get_memory():
+    """메모리 상태 확인 엔드포인트"""
+    recent = get_recent(5)
+    success = get_success()
+    
+    return {
+        "status": "success",
+        "recent_entries": len(recent),
+        "success_cases": len(success),
+        "recent_data": recent[-3:] if recent else []
     }
 
 
