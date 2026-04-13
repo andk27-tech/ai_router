@@ -1,0 +1,42 @@
+음악 툴 통합 및 CLI 업데이트
+
+수정 사항:
+1. music_tool.py 파일 생성
+   - YouTube 음악 검색 기능 (yt-dlp 사용)
+   - 음악 재생 기능 (mpv, ffplay 지원)
+   - 오디오/비디오 재생 옵션 추가
+
+2. CLI 통합 (cli_full_integration.py)
+   - MusicTool import 추가
+   - 음악 검색 쿼리 감지 (_is_music_query)
+   - 음악 검색 실행 (_execute_music_tool)
+   - 음악 재생 요청 처리 (_handle_music_play_request)
+   - 음악 중지 요청 처리 (_handle_music_stop_request)
+   - 이전 음악 자동 중지 기능 (pkill 사용)
+   - 음악 검색 결과 저장 (last_music_search)
+
+3. CLI 도움말 업데이트
+   - 웹검색 명령어 추가
+   - 음악 명령어 추가
+   - 번호 재생 명령어 추가
+   - 중지 명령어 추가
+
+4. AI 응답 제어
+   --no-ai 옵션 추가
+   - 음악/웹 검색 결과 AI 응답 건너뛰기
+   - "즐거운 음악감상!!" / "즐거운 영상감상!!" 메시지
+
+5. mpv 실행 옵션 수정
+   - --no-terminal 옵션 추가
+   - --really-quiet 옵션 추가
+   - 터미널 없이 실행되도록 수정
+
+문제 해결:
+- NameError: name 'MusicTool' is not 해결 (import 추가)
+- NameError: name 'Dict' is not 해결 (typing 모듈 import 추가)
+- 음악 재생 중 문제 해결 (pkill 사용)
+- AI 응답 계속 나오는 문제 해결 (_generate_concise_response 수정)
+
+백업:
+- 모든 변경사항 자동 백업 완료
+- 17개의 커밋이 origin/main보다 앞서 있음
