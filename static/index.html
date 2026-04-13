@@ -208,9 +208,14 @@
                     if (data.type === 'music' && data.result.tracks) {
                         responseText = '🎵 음악 검색 결과:<br><br>';
                         data.result.tracks.forEach((track, index) => {
+                            const videoId = track.url.split('v=')[1]?.split('&')[0] || '';
                             responseText += `${index + 1}. ${track.title}<br>`;
                             responseText += `   길이: ${Math.floor(track.duration / 60)}분 ${Math.floor(track.duration % 60)}초<br>`;
-                            responseText += `   <a href="${track.url}" target="_blank" style="color: #4CAF50;">YouTube에서 보기</a><br><br>`;
+                            if (videoId) {
+                                responseText += `   <iframe width="300" height="170" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br><br>`;
+                            } else {
+                                responseText += `   <a href="${track.url}" target="_blank" style="color: #4CAF50;">YouTube에서 보기</a><br><br>`;
+                            }
                         });
                     }
                     // 일반 AI 응답
