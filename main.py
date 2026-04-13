@@ -11,8 +11,12 @@ from core.ai import ai_call
 from core.memory import save as memory_save, get_success, get_recent
 from core.reward import calc_reward
 from core.policy_evolve import next_generation
+from core.tools.web_tool import WebTool
 
 app = FastAPI(title="AI Router API", version="1.0")
+
+# 툴 초기화
+web_tool = WebTool()
 
 # 정적 파일 서빙
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -108,6 +112,38 @@ async def get_memory():
         "success_cases": len(success),
         "recent_data": recent[-3:] if recent else []
     }
+
+
+@app.post("/api/web")
+async def web_search(req: Request):
+    """웹 검색 엔드포인트"""
+    body = await req.json()
+    query = body.get("query", "")
+    
+    if not query:
+        return {
+            "status": "error",
+            "error": "검색어가 필요합니다"
+        }
+    
+    try:
+        # Google 검색 URL 생성
+        search_url = f"https://www.google.com/search?q={query}"
+        
+        # WebTool로 HTTP 요청
+        result = web_tool.call_api(search_url, method="GET")
+        
+        return {
+            "status": "success",
+            "type": "web",
+            "query": query,
+            "result": result
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
 
 
 if __name__ == "__main__":
