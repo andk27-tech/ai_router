@@ -287,5 +287,57 @@
     "winner": "expand_expand_deep_hybrid",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T13:29:12.875401",
+    "input": "내 이름은 철수야",
+    "winner": "expand_expand_deep_hybrid",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T13:29:23.177694",
+    "input": "내 이름이 뭐라고?",
+    "winner": "refine",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:30:11.472101",
+    "input": "하이",
+    "winner": "balance",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:31:15.348562",
+    "input": "눅스 방벽 상태  혹인 명령어 알려줘.",
+    "winner": "expand",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:32:32.822796",
+    "input": "내이뭐라고?",
+    "winner": "balance_refine_hybrid",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:33:10.250403",
+    "input": "내아이 43이야",
+    "winner": "expand",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:33:32.804619",
+    "input": "내 나이 어떻게 된다고?",
+    "winner": "expand_extensive",
+    "score": 0,
+    "success": false
   }
 ]

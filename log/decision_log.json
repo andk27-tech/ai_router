@@ -17198,5 +17198,495 @@
     "context": {},
     "timestamp": "2026-04-13T13:09:16.125373",
     "execution_time_ms": 0.06899999999999999
+  },
+  {
+    "decision_id": "dec_b6c31eae",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:29:12.855419",
+    "execution_time_ms": 0.07200000000000001
+  },
+  {
+    "decision_id": "dec_978642ea",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:29:23.156498",
+    "execution_time_ms": 0.055
+  },
+  {
+    "decision_id": "dec_cdad3dd3",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:30:11.452033",
+    "execution_time_ms": 0.111
+  },
+  {
+    "decision_id": "dec_3df6525d",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:31:15.327429",
+    "execution_time_ms": 0.09899999999999999
+  },
+  {
+    "decision_id": "dec_03657178",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:32:32.802863",
+    "execution_time_ms": 0.058
+  },
+  {
+    "decision_id": "dec_b7a4486e",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:33:10.230324",
+    "execution_time_ms": 0.066
+  },
+  {
+    "decision_id": "dec_cd668b7f",
+    "decision_type": "routing",
+    "chosen_option": "log_analysis",
+    "confidence": 0.5,
+    "uncertainty_level": "HIGH",
+    "criteria": [
+      {
+        "name": "performance",
+        "weight": 0.25,
+        "score": 0.5,
+        "description": "기준 'performance'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.25"
+        ]
+      },
+      {
+        "name": "reliability",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'reliability'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "cost",
+        "weight": 0.15,
+        "score": 0.5,
+        "description": "기준 'cost'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.15"
+        ]
+      },
+      {
+        "name": "time",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'time'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      },
+      {
+        "name": "quality",
+        "weight": 0.2,
+        "score": 0.5,
+        "description": "기준 'quality'에 대한 평가",
+        "evidence": [
+          "점수: 0.50, 가중치: 0.20"
+        ]
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "system_status",
+        "score": 0.0,
+        "confidence": 0.5
+      },
+      {
+        "name": "general_chat",
+        "score": 0.0,
+        "confidence": 0.5
+      }
+    ],
+    "explanation": "log_analysis은(는) performance에서 양호한 성능, reliability에서 양호한 성능을(를) 보였습니다. 그러나 불확실성이 높으므로 주의가 필요합니다.",
+    "context": {},
+    "timestamp": "2026-04-13T13:33:32.784438",
+    "execution_time_ms": 0.074
   }
 ]
