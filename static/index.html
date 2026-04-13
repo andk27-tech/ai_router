@@ -210,7 +210,7 @@
                         data.result.tracks.forEach((track, index) => {
                             responseText += `${index + 1}. ${track.title}<br>`;
                             responseText += `   길이: ${Math.floor(track.duration / 60)}분 ${Math.floor(track.duration % 60)}초<br>`;
-                            responseText += `   URL: ${track.url}<br><br>`;
+                            responseText += `   <a href="${track.url}" target="_blank" style="color: #4CAF50;">YouTube에서 보기</a><br><br>`;
                         });
                     }
                     // 일반 AI 응답
