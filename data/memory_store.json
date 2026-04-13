@@ -593,5 +593,12 @@
     "winner": "expand",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:32:55.460704",
+    "input": "음악 최신강요",
+    "winner": "expand_wide",
+    "score": 0,
+    "success": true
   }
 ]
