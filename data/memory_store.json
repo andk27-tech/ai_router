@@ -579,5 +579,19 @@
     "winner": "expand",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:28:42.298064",
+    "input": "음악 찬양",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:29:11.148615",
+    "input": "2",
+    "winner": "expand",
+    "score": 0,
+    "success": true
   }
 ]

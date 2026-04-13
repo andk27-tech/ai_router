@@ -67,6 +67,11 @@ class AIFullRouterCLI:
         current_mode = get_current_mode()
         print(f"Current test mode: {current_mode}")
         
+        # AI 응답 끄기 옵션
+        self.no_ai = args.no_ai if hasattr(args, 'no_ai') else False
+        if self.no_ai:
+            print("AI responses disabled")
+        
         # Reset policy weights for clean testing
         self._reset_policy_weights()
         
