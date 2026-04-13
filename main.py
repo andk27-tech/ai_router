@@ -74,8 +74,8 @@ async def run(req: Request):
     limited_ctx = ctx[:200] if len(ctx) > 200 else ctx
     prompt = f"User: {data}\n{limited_ctx}"
     
-    # 15s timeout (reduced from 30s)
-    result = await ai_call_async(prompt, policy="balance", timeout=15)
+    # 300s timeout (increased for web search)
+    result = await ai_call_async(prompt, policy="balance", timeout=300)
     
     # 학습 시스템: 결과 저장
     memory_save({
