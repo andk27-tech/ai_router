@@ -68,8 +68,34 @@ async def run(req: Request):
     body = await req.json()
     data = body.get("data", "")
 
-    # Build simplified prompt for faster response
-    ctx = search(data)
+    # 웹검색 처리
+    if data.startswith("웹검색 "):
+        query = data[4:]  # "웹검색 " 제거
+        try:
+            # DuckDuckGo API 사용
+            import requests
+            from urllib.parse import quote
+            
+            ddg_url = f"https://duckduckgo.com/html/?q={quote(query)}"
+            response = requests.get(ddg_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
+            
+            if response.status_code == 200:
+                # 간단한 웹 검색 결과 추출
+                import re
+                results = re.findall(r'<a rel="nofollow" class="result__a" href="([^"]+)">([^<]+)</a>', response.text)
+                if results:
+                    search_results = "\n".join([f"{title}: {url}" for url, title in results[:5]])
+                    ctx = f"웹 검색 결과:\n{search_results}"
+                else:
+                    ctx = "검색 결과를 찾을 수 없습니다."
+            else:
+                ctx = "검색 실패"
+        except Exception as e:
+            ctx = f"검색 오류: {str(e)}"
+    else:
+        # Build simplified prompt for faster response
+        ctx = search(data)
+    
     # Limit context to 200 characters for speed
     limited_ctx = ctx[:200] if len(ctx) > 200 else ctx
     prompt = f"User: {data}\n{limited_ctx}\n\nInstructions: Provide a concise answer in 2-3 lines focusing on key points. If the user asks follow-up questions, provide more details."
