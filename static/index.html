@@ -162,21 +162,40 @@
             scrollToBottom();
             
             try {
-                // 타임아웃 설정 (180초)
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 180000);
+                let data;
                 
-                // API 호출
-                const response = await fetch('/api/run', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({data: message}),
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                const data = await response.json();
+                // 음악 검색 처리
+                if (message.startsWith('음악 ')) {
+                    const query = message.substring(3);
+                    const response = await fetch('/api/music/search', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({query: query, limit: 5})
+                    });
+                    data = await response.json();
+                }
+                // 로그 확인 처리
+                else if (message === '로그 보여줘') {
+                    data = {status: 'success', result: '로그 확인 기능은 현재 지원되지 않습니다. CLI에서 사용해주세요.'};
+                }
+                // 일반 AI 처리
+                else {
+                    // 타임아웃 설정 (180초)
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 180000);
+                    
+                    // API 호출
+                    const response = await fetch('/api/run', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({data: message}),
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    data = await response.json();
+                }
                 
                 // 로딩 제거
                 loadingDiv.remove();
