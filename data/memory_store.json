@@ -453,5 +453,26 @@
     "winner": "expand_extensive",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:28:33.834145",
+    "input": "웹검색 최신곡 무료 듣는법",
+    "winner": "expand_x",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:33:23.287180",
+    "input": "웹검색 오늘의  뉴스",
+    "winner": "expand_detailed",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:35:22.792971",
+    "input": "웹검색 오늘의 코스피지수",
+    "winner": "refine",
+    "score": 0,
+    "success": true
   }
 ]
