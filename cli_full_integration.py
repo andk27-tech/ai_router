@@ -81,6 +81,7 @@ class AIFullRouterCLI:
         self.system_tool = SystemTool()
         self.file_tool = FileTool()
         self.web_tool = WebTool()
+        self.music_tool = MusicTool()
         
         # Permission settings
         self.log_integration.grant_permissions(
