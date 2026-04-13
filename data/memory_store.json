@@ -663,5 +663,61 @@
     "winner": "balance",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:48:46.560103",
+    "input": "음악 최신악",
+    "winner": "expand_extensive",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:49:34.552809",
+    "input": "1",
+    "winner": "expand",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:50:17.371334",
+    "input": "2",
+    "winner": "refine",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:50:41.023037",
+    "input": "중지",
+    "winner": "expand",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:51:02.895907",
+    "input": "중지",
+    "winner": "expand",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T15:52:01.217428",
+    "input": "음악 최신음악",
+    "winner": "expand",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:52:39.577392",
+    "input": "1",
+    "winner": "balance",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:52:57.280502",
+    "input": "중지",
+    "winner": "expand",
+    "score": 0,
+    "success": true
   }
 ]
