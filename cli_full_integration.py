@@ -128,6 +128,17 @@ class AIFullRouterCLI:
         print(f"Turn {self.conversation_turn}: {user_input[:50]}...")
         print(f"{'='*60}")
         
+        # 0. Cache check
+        print("\n0. Cache check")
+        from core.cache import get_cache, set_cache
+        cached_response = get_cache(user_input)
+        if cached_response:
+            print("   Using cached response")
+            # 캐시 히트 시에도 메모리 저장
+            self._save_to_memory(user_input, {'success': True, 'cached': True}, 'cache')
+            return cached_response
+        print("   Cache miss - proceeding with full pipeline")
+        
         # 1. Intent analysis
         print("\n1. Intent analysis (Intent Parser)")
         intent = self.intent_parser.parse(user_input)
