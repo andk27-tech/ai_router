@@ -373,5 +373,22 @@
     "winner": "expand_deep_refine_hybrid",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:39:19.000919",
+    "input": "내 이름은 철수야",
+    "winner": "expand_ultra",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T13:39:31.578803",
+    "input": "내 이름이 뭐라고?",
+    "winner": "refine",
+    "score": 0,
+    "success": false
   }
 ]
