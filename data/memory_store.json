@@ -242,5 +242,50 @@
     "winner": "refine",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:04:17.955629",
+    "input": "내이름은 철수야",
+    "winner": "refine",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T13:04:49.210812",
+    "input": "내이름이 뭐라고?",
+    "winner": "balance",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:06:07.244656",
+    "input": "내 이름을 너가 기억하는가 싶어서 물어본거야",
+    "winner": "expand_broad",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:07:03.645966",
+    "input": "또 기억하고있는거있어?",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:08:04.194660",
+    "input": "리눅스 방화벽에 firewalld 를많쓰는데 상태확인 명령어 알려줘.",
+    "winner": "balance_expand_hybrid",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T13:09:16.150944",
+    "input": "어 맞아firewall-cmd --state 고마워.",
+    "winner": "expand_expand_deep_hybrid",
+    "score": 0,
+    "success": true
   }
 ]
