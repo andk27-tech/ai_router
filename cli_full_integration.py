@@ -305,7 +305,8 @@ class AIFullRouterCLI:
         """음악 검색 쿼리 감지"""
         text_no_space = text.replace(' ', '').lower()
         keywords = [
-            '음악', '노래', '재생', '듣기', 'play', 'music', 'song'
+            '음악', '노래', '재생', '듣기', 'play', 'music', 'song',
+            'bts', 'blackpink', '아이유', 'iu', '방탄소년단'
         ]
         # Search both original and space-removed versions
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)

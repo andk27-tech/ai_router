@@ -474,5 +474,12 @@
     "winner": "refine",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:54:45.247351",
+    "input": "음bts",
+    "winner": "refine",
+    "score": 0,
+    "success": false
   }
 ]
