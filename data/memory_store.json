@@ -544,5 +544,40 @@
     "winner": "refine",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:20:49.305463",
+    "input": "음악 최신음악",
+    "winner": "expand_broad",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:21:13.089286",
+    "input": "1",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:21:37.915634",
+    "input": "중지",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:21:52.735870",
+    "input": "2",
+    "winner": "expand_detailed",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:24:51.351766",
+    "input": "중지",
+    "winner": "expand",
+    "score": 0,
+    "success": true
   }
 ]
