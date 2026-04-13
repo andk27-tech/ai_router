@@ -1,0 +1,26 @@
+=== AI Modification Record ===
+Date: 2026-04-13 12:13:51
+Author: AI Assistant
+File: cli_full_integration.py
+Task: User info extraction and cache save
+
+## Problem
+- Memory storage showing DISABLED (but actually saving)
+- User info not extracted from input
+- User name not included in AI response
+- No cache save functionality
+
+## Changes
+1. Fixed print statement - changed DISABLED to ENABLED
+2. Added user info extraction (_extract_user_info)
+   - Extract name from patterns: "내 이름은 XXX", "이름은 XXX", etc.
+3. Added user info search from memory (_get_user_info_from_memory)
+   - Search recent 50 memory entries
+   - Return stored user name
+4. Added user info to AI response context
+   - Include user name in AI prompt
+5. Added cache save after response
+   - Save response to cache for future use
+
+## Status
+✅ Fix complete - need to restart CLI
