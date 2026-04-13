@@ -265,12 +265,15 @@
                     }
                     
                     addMessage(responseText, 'ai');
+                    userInput.focus();
                 } else {
                     addMessage('오류가 발생했습니다.', 'ai', true);
+                    userInput.focus();
                 }
             } catch (error) {
                 loadingDiv.remove();
                 addMessage('서버 연결 오류: ' + error.message, 'ai', true);
+                userInput.focus();
             }
             
             sendBtn.disabled = false;
