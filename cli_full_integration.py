@@ -348,6 +348,39 @@ class AIFullRouterCLI:
         except Exception as e:
             print(f"   Memory save error: {e}")
     
+    def _extract_user_info(self, user_input):
+        """Extract user info (name, etc.) from input"""
+        import re
+        user_info = {}
+        
+        name_patterns = [
+            r'내 이름은\s*([가-힣A-Za-z]+)',
+            r'我叫\s*([가-힣A-Za-z]+)',
+            r'my name is\s*([A-Za-z]+)',
+            r'이름은\s*([가-힣A-Za-z]+)'
+        ]
+        
+        for pattern in name_patterns:
+            match = re.search(pattern, user_input, re.IGNORECASE)
+            if match:
+                user_info['name'] = match.group(1)
+                break
+        
+        return user_info if user_info else None
+    
+    def _get_user_info_from_memory(self):
+        """Get user info from memory"""
+        try:
+            from core.memory import get_recent
+            recent_entries = get_recent(50)
+            
+            for entry in reversed(recent_entries):
+                if 'user_info' in entry and entry['user_info'].get('name'):
+                    return entry['user_info']
+            return None
+        except:
+            return None
+    
     def _calculate_reward(self, tool_result):
         """Reward calculation"""
         score = tool_result.get('score', 0) if tool_result else 0
