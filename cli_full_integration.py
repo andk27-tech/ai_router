@@ -96,6 +96,9 @@ class AIFullRouterCLI:
         self.session_id = self.context_tracker.create_session("cli_session")
         self.conversation_turn = 0
         
+        # 음악 검색 결과 저장
+        self.last_music_search = None
+        
         print("AI Router Full Integration initialization complete")
         print(f"   - Session ID: {self.session_id}")
         print(f"   - Multi-agent: refine/balance/expand (run_agents)")
@@ -223,6 +226,9 @@ class AIFullRouterCLI:
         elif self._is_music_query(user_input):
             print("   Music search execution (music intent)")
             tool_result = self._execute_music_tool(user_input)
+        elif self._is_music_play_request(user_input):
+            print("   Music play request (play intent)")
+            tool_result = self._handle_music_play_request(user_input)
         else:
             print("   General conversation (default)")
             tool_result = {'type': 'chat', 'data': None}
@@ -311,6 +317,67 @@ class AIFullRouterCLI:
         # Search both original and space-removed versions
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)
     
+    def _is_music_play_request(self, text):
+        """음악 재생 요청 감지 (숫자)"""
+        try:
+            number = int(text.strip())
+            return 1 <= number <= 5
+        except:
+            return False
+    
+    def _handle_music_play_request(self, user_input):
+        """음악 재생 요청 처리"""
+        try:
+            number = int(user_input.strip())
+            
+            if not self.last_music_search:
+                return {
+                    'success': False,
+                    'type': 'music',
+                    'error': '먼저 음악을 검색해주세요'
+                }
+            
+            if number < 1 or number > len(self.last_music_search):
+                return {
+                    'success': False,
+                    'type': 'music',
+                    'error': '잘못된 번호입니다'
+                }
+            
+            track = self.last_music_search[number - 1]
+            url = track.get('url', '')
+            
+            if not url:
+                return {
+                    'success': False,
+                    'type': 'music',
+                    'error': 'URL을 찾을 수 없습니다'
+                }
+            
+            print(f"   🎶 재생 중: {track['title']}")
+            
+            # 음악 재생
+            result = self.music_tool.play_music(url)
+            
+            if result['success']:
+                print(f"   ✅ 재생 시작됨")
+            else:
+                print(f"   ❌ 재생 실패: {result.get('error')}")
+            
+            return {
+                'success': result['success'],
+                'type': 'music',
+                'track': track['title'],
+                'error': result.get('error') if not result['success'] else None
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'type': 'music',
+                'error': str(e)
+            }
+    
     def _execute_music_tool(self, user_input):
         """음악 툴 실행"""
         # 검색어 추출
@@ -334,6 +401,9 @@ class AIFullRouterCLI:
             tracks = result.get('tracks', [])
             for i, track in enumerate(tracks[:5], 1):
                 print(f"   {i}. {track['title']} ({track['duration']}초)")
+            
+            # 음악 검색 결과 저장
+            self.last_music_search = tracks
             
             return {
                 'success': True,
