@@ -1,0 +1,23 @@
+=== AI Modification Record ===
+Date: 2026-04-13 11:38:50
+Author: AI Assistant
+File: cli_full_integration.py
+Task: Session save bug fix
+
+## Problem
+- Session save (save_session_persistence) was not called
+- Conversation history not preserved after restart
+- User name not remembered
+
+## Changes
+1. Added session save in _save_conversation_turn
+   - Call save_session_persistence after add_conversation_turn
+   - Improved error handling with error message output
+
+2. Added session save on exit
+   - quit command: save session
+   - KeyboardInterrupt: save session
+   - EOFError: save session
+
+## Status
+✅ Fix complete
