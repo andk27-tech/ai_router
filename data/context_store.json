@@ -140,5 +140,36 @@
       "total_tokens": 0,
       "session_duration_minutes": 0
     }
+  },
+  "test_session": {
+    "session_id": "test_session",
+    "created_at": "2026-04-13T11:39:06.929327",
+    "last_active": "2026-04-13T11:39:06.929361",
+    "conversation_history": [
+      {
+        "turn_id": "test_session_0001",
+        "timestamp": "2026-04-13T11:39:06.929361",
+        "user_input": "내 이름은 철수야",
+        "intent_type": "interaction",
+        "policy_used": "balance",
+        "response_summary": "응답",
+        "context_snapshot": {
+          "test": true
+        },
+        "relevance_score": 0.0,
+        "feedback": null
+      }
+    ],
+    "accumulated_context": {
+      "intent_counts": {
+        "interaction": 1
+      },
+      "dominant_intent": "interaction"
+    },
+    "metadata": {
+      "turn_count": 1,
+      "total_tokens": 0,
+      "session_duration_minutes": 0
+    }
   }
 }
