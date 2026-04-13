@@ -68,27 +68,9 @@ async def run(req: Request):
     body = await req.json()
     data = body.get("data", "")
 
-    # 웹검색 처리 (Google AI API 사용)
+    # 웹검색 처리 (현재 기능 제거됨)
     if data.startswith("웹검색 "):
-        query = data[4:]  # "웹검색 " 제거
-        try:
-            import google.generativeai as genai
-            
-            # Google AI API 설정
-            genai.configure(api_key="AIzaSyCKWJ8_hd0NclaXWMVdf01kC2smeilTrcM")
-            
-            # Gemini 모델 사용
-            model = genai.GenerativeModel('gemini-1.5-pro')
-            
-            # 검색 프롬프트
-            search_prompt = f"{query}에 대해 알려주세요"
-            
-            # 응답 생성
-            response = model.generate_content(search_prompt)
-            ctx = response.text
-            
-        except Exception as e:
-            ctx = f"검색 오류: {str(e)}"
+        ctx = "웹 검색 기능은 현재 사용할 수 없습니다. 일반 AI 질문을 사용해주세요."
     else:
         # Build simplified prompt for faster response
         ctx = search(data)
