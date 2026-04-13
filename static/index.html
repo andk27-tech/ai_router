@@ -245,6 +245,25 @@
                             }
                         });
                     }
+                    // 시스템 로그 결과 표시
+                    else if (data.type === 'log') {
+                        responseText = '📋 시스템 로그:<br><br>';
+                        if (data.logs && data.logs.length > 0) {
+                            data.logs.forEach(log => {
+                                responseText += `<b>${log.file}</b><br>`;
+                                responseText += `${log.content}<br><br>`;
+                            });
+                        } else {
+                            responseText = '로그 파일이 없습니다.';
+                        }
+                    }
+                    // 시스템 상태 결과 표시
+                    else if (data.type === 'system') {
+                        responseText = '⚙️ 시스템 상태:<br><br>';
+                        responseText += `CPU 사용량: ${data.cpu.usage}%<br>`;
+                        responseText += `메모리: ${data.memory.percent}% 사용 (${Math.round(data.memory.used / 1024 / 1024 / 1024)}GB / ${Math.round(data.memory.total / 1024 / 1024 / 1024)}GB)<br>`;
+                        responseText += `디스크: ${data.disk.percent}% 사용 (${Math.round(data.disk.used / 1024 / 1024 / 1024)}GB / ${Math.round(data.disk.total / 1024 / 1024 / 1024)}GB)<br>`;
+                    }
                     // 일반 AI 응답
                     else {
                         responseText = data.result;
