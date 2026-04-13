@@ -175,7 +175,7 @@
                     data = await response.json();
                 }
                 // 로그 확인 처리
-                else if (message === '로그 보여줘' || message === '시스템 로그보여줘') {
+                else if (message === '로그 보여줘' || message === '시스템 로그보여줘' || message === '시스템 로그 확인') {
                     const response = await fetch('/api/system/logs', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'}
@@ -183,7 +183,7 @@
                     data = await response.json();
                 }
                 // 시스템 상태 처리
-                else if (message === '시스템 상태') {
+                else if (message === '시스템 상태' || message === '시스템 상태확인' || message === '시스템 상태 확인') {
                     const response = await fetch('/api/system/status', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'}
