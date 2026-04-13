@@ -183,7 +183,7 @@ async def music_search(req: Request):
 
 @app.post("/api/music/play")
 async def music_play(req: Request):
-    """음악 재생 엔드포인트"""
+    """음악 재생 엔드포인트 (YouTube URL 반환)"""
     body = await req.json()
     url = body.get("url", "")
     
@@ -193,26 +193,13 @@ async def music_play(req: Request):
             "error": "URL이 필요합니다"
         }
     
-    global music_process
-    global last_music_search
-    
     try:
-        # 이전 음악 중지
-        if music_process:
-            import subprocess
-            subprocess.run(['pkill', '-9', 'mpv'], capture_output=True)
-            music_process = None
-        
-        # 음악 재생
-        result = music_tool.play_music(url)
-        
-        if result['success']:
-            music_process = result.get('pid')
-        
+        # YouTube URL만 반환 (휴대폰에서 직접 재생)
         return {
             "status": "success",
             "type": "music",
-            "result": result
+            "youtube_url": url,
+            "message": "휴대폰에서 YouTube URL로 직접 재생하세요"
         }
     except Exception as e:
         return {
