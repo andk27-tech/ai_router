@@ -231,5 +231,69 @@ async def music_stop():
         }
 
 
+@app.post("/api/system/status")
+async def system_status():
+    """시스템 상태 확인 엔드포인트"""
+    try:
+        import psutil
+        cpu = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory()
+        disk = psutil.disk_usage('/')
+        
+        return {
+            "status": "success",
+            "type": "system",
+            "cpu": {"usage": cpu},
+            "memory": {
+                "total": memory.total,
+                "available": memory.available,
+                "used": memory.used,
+                "percent": memory.percent
+            },
+            "disk": {
+                "total": disk.total,
+                "used": disk.used,
+                "free": disk.free,
+                "percent": disk.percent
+            }
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+
+@app.post("/api/system/logs")
+async def system_logs():
+    """시스템 로그 확인 엔드포인트"""
+    try:
+        import os
+        log_dir = 'log/source_log'
+        logs = []
+        
+        if os.path.exists(log_dir):
+            log_files = sorted(os.listdir(log_dir), reverse=True)[:5]
+            for log_file in log_files:
+                log_path = os.path.join(log_dir, log_file)
+                with open(log_path, 'r', encoding='utf-8') as f:
+                    lines = f.readlines()[-10:]
+                    logs.append({
+                        "file": log_file,
+                        "content": ''.join(lines)
+                    })
+        
+        return {
+            "status": "success",
+            "type": "log",
+            "logs": logs
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
