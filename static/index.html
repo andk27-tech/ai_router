@@ -200,16 +200,30 @@
                 // 로딩 제거
                 loadingDiv.remove();
                 
-                // AI 응답 추가
+                // 응답 추가
                 if (data.status === 'success') {
-                    let responseText = data.result;
+                    let responseText;
                     
-                    // 디버그 정보 추가 (선택적)
-                    if (data.winner || data.intent) {
-                        responseText += '<div class="debug-info">';
-                        if (data.winner) responseText += `Winner: ${data.winner} | `;
-                        if (data.intent) responseText += `Intent: ${data.intent.type}`;
-                        responseText += '</div>';
+                    // 음악 검색 결과 표시
+                    if (data.type === 'music' && data.result.tracks) {
+                        responseText = '🎵 음악 검색 결과:<br><br>';
+                        data.result.tracks.forEach((track, index) => {
+                            responseText += `${index + 1}. ${track.title}<br>`;
+                            responseText += `   길이: ${Math.floor(track.duration / 60)}분 ${Math.floor(track.duration % 60)}초<br>`;
+                            responseText += `   URL: ${track.url}<br><br>`;
+                        });
+                    }
+                    // 일반 AI 응답
+                    else {
+                        responseText = data.result;
+                        
+                        // 디버그 정보 추가 (선택적)
+                        if (data.winner || data.intent) {
+                            responseText += '<div class="debug-info">';
+                            if (data.winner) responseText += `Winner: ${data.winner} | `;
+                            if (data.intent) responseText += `Intent: ${data.intent.type}`;
+                            responseText += '</div>';
+                        }
                     }
                     
                     addMessage(responseText, 'ai');
