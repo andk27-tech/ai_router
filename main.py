@@ -72,7 +72,7 @@ async def run(req: Request):
     ctx = search(data)
     # Limit context to 200 characters for speed
     limited_ctx = ctx[:200] if len(ctx) > 200 else ctx
-    prompt = f"User: {data}\n{limited_ctx}"
+    prompt = f"User: {data}\n{limited_ctx}\n\nInstructions: Provide a concise answer in 2-3 lines focusing on key points. If the user asks follow-up questions, provide more details."
     
     # 300s timeout (increased for web search)
     result = await ai_call_async(prompt, policy="balance", timeout=300)
