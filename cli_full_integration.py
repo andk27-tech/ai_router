@@ -218,6 +218,9 @@ class AIFullRouterCLI:
         elif self._is_web_search_query(user_input):
             print("   Web search execution (web search intent)")
             tool_result = self._execute_web_tool(user_input)
+        elif self._is_music_query(user_input):
+            print("   Music search execution (music intent)")
+            tool_result = self._execute_music_tool(user_input)
         else:
             print("   General conversation (default)")
             tool_result = {'type': 'chat', 'data': None}
@@ -295,6 +298,55 @@ class AIFullRouterCLI:
         ]
         # Search both original and space-removed versions
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)
+    
+    def _is_music_query(self, text):
+        """음악 검색 쿼리 감지"""
+        text_no_space = text.replace(' ', '').lower()
+        keywords = [
+            '음악', '노래', '재생', '듣기', 'play', 'music', 'song'
+        ]
+        # Search both original and space-removed versions
+        return any(kw in text.lower() or kw in text_no_space for kw in keywords)
+    
+    def _execute_music_tool(self, user_input):
+        """음악 툴 실행"""
+        # 검색어 추출
+        search_query = user_input
+        for prefix in ['음악', '노래', '재생', '듣기', 'play', 'music', 'song']:
+            if prefix in user_input.lower():
+                search_query = user_input.lower().replace(prefix, '').strip()
+                break
+        
+        # 검색어가 없으면 기본값 사용
+        if not search_query:
+            search_query = user_input
+        
+        print(f"   🎵 음악 검색: {search_query}")
+        
+        # 음악 검색
+        result = self.music_tool.search_music(search_query, limit=5)
+        
+        if result['success']:
+            print(f"   ✅ 검색 성공: {result['count']}개 결과")
+            tracks = result.get('tracks', [])
+            for i, track in enumerate(tracks[:3], 1):
+                print(f"   {i}. {track['title']} ({track['duration']}초)")
+            
+            return {
+                'success': True,
+                'type': 'music',
+                'query': search_query,
+                'tracks': tracks,
+                'count': result['count']
+            }
+        else:
+            print(f"   ❌ 검색 실패: {result.get('error', '검색 실패')}")
+            return {
+                'success': False,
+                'type': 'music',
+                'query': search_query,
+                'error': result.get('error', '검색 실패')
+            }
     
     def _execute_web_tool(self, user_input):
         """웹 툴 실행"""
