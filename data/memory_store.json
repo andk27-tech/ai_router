@@ -488,5 +488,61 @@
     "winner": "expand_broad",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:03:22.214270",
+    "input": "bts",
+    "winner": "balance_refine_hybrid",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:03:48.306714",
+    "input": "1",
+    "winner": "expand_detailed",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T15:07:37.208961",
+    "input": "음 최신가요",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T15:08:55.545168",
+    "input": "음 bts",
+    "winner": "expand",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:09:22.355470",
+    "input": "1",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:14:08.838134",
+    "input": "음악 bts",
+    "winner": "expand_comprehensive",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:14:28.536831",
+    "input": "1",
+    "winner": "balance",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:17:08.946606",
+    "input": "2",
+    "winner": "refine",
+    "score": 0,
+    "success": true
   }
 ]

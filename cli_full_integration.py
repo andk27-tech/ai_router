@@ -99,6 +99,7 @@ class AIFullRouterCLI:
         
         # 음악 검색 결과 저장
         self.last_music_search = None
+        self.music_process = None
         
         print("AI Router Full Integration initialization complete")
         print(f"   - Session ID: {self.session_id}")
@@ -230,6 +231,9 @@ class AIFullRouterCLI:
         elif self._is_music_play_request(user_input):
             print("   Music play request (play intent)")
             tool_result = self._handle_music_play_request(user_input)
+        elif self._is_music_stop_request(user_input):
+            print("   Music stop request (stop intent)")
+            tool_result = self._handle_music_stop_request()
         else:
             print("   General conversation (default)")
             tool_result = {'type': 'chat', 'data': None}
@@ -326,6 +330,28 @@ class AIFullRouterCLI:
         except:
             return False
     
+    def _is_music_stop_request(self, text):
+        """음악 중지 요청 감지"""
+        keywords = ['중지', '정지', 'stop', '종료', 'quit', 'exit']
+        return any(kw in text.lower() for kw in keywords)
+    
+    def _handle_music_stop_request(self):
+        """음악 중지 요청 처리"""
+        try:
+            if self.music_process:
+                import os
+                import signal
+                os.kill(self.music_process, signal.SIGTERM)
+                self.music_process = None
+                print("   ⏸️  음악 중지됨")
+                return {'success': True, 'type': 'music', 'message': '음악 중지됨'}
+            else:
+                print("   ℹ️  재생 중인 음악이 없습니다")
+                return {'success': False, 'type': 'music', 'error': '재생 중인 음악이 없습니다'}
+        except Exception as e:
+            print(f"   ❌ 중지 실패: {str(e)}")
+            return {'success': False, 'type': 'music', 'error': str(e)}
+    
     def _handle_music_play_request(self, user_input):
         """음악 재생 요청 처리"""
         try:
@@ -362,6 +388,7 @@ class AIFullRouterCLI:
             
             if result['success']:
                 print(f"   ✅ 재생 시작됨")
+                self.music_process = result.get('pid')
             else:
                 print(f"   ❌ 재생 실패: {result.get('error')}")
             
@@ -441,6 +468,7 @@ class AIFullRouterCLI:
             
             if result['success']:
                 print(f"   ✅ 재생 시작됨")
+                self.music_process = result.get('pid')
             else:
                 print(f"   ❌ 재생 실패: {result.get('error')}")
             
