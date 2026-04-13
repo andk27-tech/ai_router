@@ -810,5 +810,12 @@
     "score": 10,
     "policy": "balance",
     "timestamp": "2026-04-13T18:05:26.582980"
+  },
+  {
+    "input": "음악 최신음악 보여줘",
+    "output": "[AI 응답 시간 초과 - 잠시 후 다시 시도해주세요]",
+    "score": 10,
+    "policy": "balance",
+    "timestamp": "2026-04-13T18:16:04.891420"
   }
 ]
