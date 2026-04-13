@@ -509,16 +509,16 @@ Focus on key information and solutions if needed."""
             test_policy = get_test_policy()
             is_dummy = test_policy.should_use_dummy()
             current_mode = test_policy.get_test_mode()
-            print(f"\n[Debug] Test mode: {current_mode}, dummy: {is_dummy}")
+            # print(f"\n[Debug] Test mode: {current_mode}, dummy: {is_dummy}")
             
             # AI prompt display
-            print(f"\nAI prompt ({len(prompt)} chars):")
-            print("-" * 40)
-            print(prompt[:200] + "..." if len(prompt) > 200 else prompt)
-            print("-" * 40)
+            # print(f"\nAI prompt ({len(prompt)} chars):")
+            # print("-" * 40)
+            # print(prompt[:200] + "..." if len(prompt) > 200 else prompt)
+            # print("-" * 40)
             
-            print("\nAI response (real-time):\n")
-            print("   ", end='', flush=True)  # Indentation
+            # print("\nAI response (real-time):\n")
+            # print("   ", end='', flush=True)  # Indentation
             
             # Streaming AI call
             response = ai_call(prompt, stream=True)

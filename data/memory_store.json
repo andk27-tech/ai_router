@@ -439,5 +439,12 @@
     "winner": "expand_detailed",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T14:19:21.642128",
+    "input": "웹검색 최신음악",
+    "winner": "expand",
+    "score": 0,
+    "success": true
   }
 ]
