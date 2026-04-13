@@ -327,7 +327,7 @@ class AIFullRouterCLI:
         }
     
     def _save_to_memory(self, user_input, result, winner):
-        """Save to memory"""
+        """Save to memory with user info extraction"""
         try:
             from datetime import datetime
             entry = {
@@ -337,9 +337,16 @@ class AIFullRouterCLI:
                 'score': result.get('score', 0) if result else 0,
                 'success': result.get('success', False) if result else False
             }
+            
+            # 사용자 정보 추출
+            user_info = self._extract_user_info(user_input)
+            if user_info:
+                entry['user_info'] = user_info
+                print(f"   User info extracted: {user_info}")
+            
             save(entry)
-        except:
-            pass
+        except Exception as e:
+            print(f"   Memory save error: {e}")
     
     def _calculate_reward(self, tool_result):
         """Reward calculation"""
