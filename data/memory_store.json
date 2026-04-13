@@ -61,5 +61,36 @@
     "winner": "expand",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T12:32:35.754607",
+    "input": "내이름은 철수야",
+    "winner": "expand",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T12:32:56.680702",
+    "input": "내이름이 뭐라고?",
+    "winner": "expand_max",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T12:36:15.086313",
+    "input": "cd /home/lks/ai_router",
+    "winner": "refine",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T12:36:33.186092",
+    "input": "python3 cli_full_integration.pycd /home/lks/ai_router",
+    "winner": "expand",
+    "score": 0,
+    "success": false
   }
 ]
