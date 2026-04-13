@@ -7,6 +7,7 @@ Fixed version with concise responses
 import sys
 import os
 import argparse
+from typing import Dict, Any, Optional
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Test mode setting (before imports)
