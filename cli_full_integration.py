@@ -332,7 +332,7 @@ class AIFullRouterCLI:
         if result['success']:
             print(f"   ✅ 검색 성공: {result['count']}개 결과")
             tracks = result.get('tracks', [])
-            for i, track in enumerate(tracks[:3], 1):
+            for i, track in enumerate(tracks[:5], 1):
                 print(f"   {i}. {track['title']} ({track['duration']}초)")
             
             return {
@@ -350,6 +350,33 @@ class AIFullRouterCLI:
                 'query': search_query,
                 'error': result.get('error', '검색 실패')
             }
+    
+    def play_music_by_number(self, number: int, tracks: list) -> Dict[str, Any]:
+        """숫자로 음악 재생"""
+        try:
+            if number < 1 or number > len(tracks):
+                return {'success': False, 'error': '잘못된 번호입니다'}
+            
+            track = tracks[number - 1]
+            url = track.get('url', '')
+            
+            if not url:
+                return {'success': False, 'error': 'URL을 찾을 수 없습니다'}
+            
+            print(f"   🎶 재생 중: {track['title']}")
+            
+            # 음악 재생
+            result = self.music_tool.play_music(url)
+            
+            if result['success']:
+                print(f"   ✅ 재생 시작됨")
+            else:
+                print(f"   ❌ 재생 실패: {result.get('error')}")
+            
+            return result
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
     
     def _execute_web_tool(self, user_input):
         """웹 툴 실행"""

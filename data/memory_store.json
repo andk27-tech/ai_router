@@ -481,5 +481,12 @@
     "winner": "refine",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T14:56:55.339525",
+    "input": "음악 bts",
+    "winner": "expand_broad",
+    "score": 0,
+    "success": true
   }
 ]
