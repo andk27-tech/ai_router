@@ -376,6 +376,12 @@ class AIFullRouterCLI:
                     'error': '잘못된 번호입니다'
                 }
             
+            # 이전 음악 중지 (pkill 사용)
+            import subprocess
+            subprocess.run(['pkill', '-9', 'mpv'], capture_output=True)
+            self.music_process = None
+            print("   ⏸️  이전 음악 중지됨")
+            
             track = self.last_music_search[number - 1]
             url = track.get('url', '')
             
