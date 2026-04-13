@@ -600,5 +600,26 @@
     "winner": "expand_wide",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:36:19.548539",
+    "input": "음악 최신음악",
+    "winner": "expand_deep",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:36:47.500396",
+    "input": "1",
+    "winner": "refine",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T15:37:26.326741",
+    "input": "2",
+    "winner": "expand_expand_deep_hybrid",
+    "score": 0,
+    "success": true
   }
 ]
