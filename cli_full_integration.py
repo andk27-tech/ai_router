@@ -51,6 +51,7 @@ from core.context import ContextTracker
 from core.tools.log_integration_extended import SystemLogIntegration
 from core.tools.system_tool import SystemTool
 from core.tools.file_tool import FileTool
+from core.tools.web_tool import WebTool
 
 from core.ai import ai_call
 from core.test_policy import set_test_mode, TestMode
