@@ -79,6 +79,7 @@ class AIFullRouterCLI:
         self.log_integration = SystemLogIntegration()
         self.system_tool = SystemTool()
         self.file_tool = FileTool()
+        self.web_tool = WebTool()
         
         # Permission settings
         self.log_integration.grant_permissions(
