@@ -68,12 +68,8 @@ async def run(req: Request):
     body = await req.json()
     data = body.get("data", "")
 
-    # 웹검색 처리 (현재 기능 제거됨)
-    if data.startswith("웹검색 "):
-        ctx = "웹 검색 기능은 현재 사용할 수 없습니다. 일반 AI 질문을 사용해주세요."
-    else:
-        # Build simplified prompt for faster response
-        ctx = search(data)
+    # Build simplified prompt for faster response
+    ctx = search(data)
     
     # Limit context to 200 characters for speed
     limited_ctx = ctx[:200] if len(ctx) > 200 else ctx
