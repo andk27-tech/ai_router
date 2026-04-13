@@ -446,5 +446,12 @@
     "winner": "expand",
     "score": 0,
     "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:23:57.823158",
+    "input": "웹검색 울산 날씨",
+    "winner": "expand_extensive",
+    "score": 0,
+    "success": true
   }
 ]
