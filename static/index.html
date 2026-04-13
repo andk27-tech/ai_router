@@ -118,7 +118,7 @@
     </div>
     
     <div class="input-container">
-        <input type="text" id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" readonly>
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
@@ -126,6 +126,11 @@
         const chatContainer = document.getElementById('chat-container');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
+        
+        // 입력창 클릭 시 readonly 제거
+        userInput.addEventListener('click', () => {
+            userInput.removeAttribute('readonly');
+        });
         
         // Enter 키로 전송
         userInput.addEventListener('keypress', (e) => {
