@@ -213,6 +213,9 @@ class AIFullRouterCLI:
         elif intent_type == 'status' or self._is_status_query(user_input):
             print("   System status check (status intent)")
             tool_result = self._execute_system_tool(user_input)
+        elif self._is_web_search_query(user_input):
+            print("   Web search execution (web search intent)")
+            tool_result = self._execute_web_tool(user_input)
         else:
             print("   General conversation (default)")
             tool_result = {'type': 'chat', 'data': None}
@@ -281,6 +284,50 @@ class AIFullRouterCLI:
         ]
         # Search both original and space-removed versions
         return any(kw in text.lower() or kw in text_no_space for kw in keywords)
+    
+    def _is_web_search_query(self, text):
+        """웹 검색 쿼리 감지"""
+        text_no_space = text.replace(' ', '').lower()
+        keywords = [
+            '웹검색', '검색', 'search', 'web', 'google', '찾아줘', '알려줘'
+        ]
+        # Search both original and space-removed versions
+        return any(kw in text.lower() or kw in text_no_space for kw in keywords)
+    
+    def _execute_web_tool(self, user_input):
+        """웹 툴 실행"""
+        # 검색어 추출
+        search_query = user_input
+        for prefix in ['웹검색', '검색', 'search', 'web']:
+            if prefix in user_input.lower():
+                search_query = user_input.lower().replace(prefix, '').strip()
+                break
+        
+        # 검색어가 없으면 기본값 사용
+        if not search_query:
+            search_query = user_input
+        
+        # Google 검색 URL 생성
+        search_url = f"https://www.google.com/search?q={search_query}"
+        
+        # 웹 스크래핑 시도
+        result = self.web_tool.call_api(search_url, method='GET', headers={'User-Agent': 'Mozilla/5.0'})
+        
+        if result['success']:
+            return {
+                'success': True,
+                'type': 'web',
+                'query': search_query,
+                'message': f'"{search_query}" 검색을 수행했습니다',
+                'status_code': result['status_code']
+            }
+        else:
+            return {
+                'success': False,
+                'type': 'web',
+                'query': search_query,
+                'error': result.get('error', '검색 실패')
+            }
     
     def _calculate_agent_score(self, agent_policy, intent, selected_policy):
         """Agent score calculation"""
