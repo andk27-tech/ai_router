@@ -174,16 +174,16 @@
   },
   "cli_session": {
     "session_id": "cli_session",
-    "created_at": "2026-04-13T13:29:00.273875",
-    "last_active": "2026-04-13T13:29:26.821467",
+    "created_at": "2026-04-13T13:36:43.708748",
+    "last_active": "2026-04-13T13:37:21.513574",
     "conversation_history": [
       {
         "turn_id": "cli_session_0001",
-        "timestamp": "2026-04-13T13:29:17.040262",
+        "timestamp": "2026-04-13T13:37:11.418166",
         "user_input": "내 이름은 철수야",
         "intent_type": "interaction",
-        "policy_used": "expand_expand_deep_hybrid",
-        "response_summary": "철수님 환영합니다! 무엇을 도와드릴까요?\n\n",
+        "policy_used": "expand_extensive",
+        "response_summary": "철수님을 인식했습니다. 어떻게 도와드릴까요?\n\n",
         "context_snapshot": {
           "tool_type": "chat",
           "success": false
@@ -193,11 +193,11 @@
       },
       {
         "turn_id": "cli_session_0002",
-        "timestamp": "2026-04-13T13:29:26.821467",
+        "timestamp": "2026-04-13T13:37:21.513574",
         "user_input": "내 이름이 뭐라고?",
         "intent_type": "interaction",
-        "policy_used": "refine",
-        "response_summary": "철수님의 이름은 철수야!\n\n",
+        "policy_used": "balance",
+        "response_summary": "철수야, 반갑습니다! 어떤 도움을 드릴까요?\n\n",
         "context_snapshot": {
           "tool_type": "chat",
           "success": false

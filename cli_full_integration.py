@@ -337,7 +337,7 @@ class AIFullRouterCLI:
             'disk': disk.get('root_partition', {})
         }
     
-    def _save_to_memory(self, user_input, result, winner):
+    def _save_to_memory(self, user_input, result, winner, response=None):
         """Save to memory with user info extraction"""
         try:
             from datetime import datetime
@@ -348,6 +348,10 @@ class AIFullRouterCLI:
                 'score': result.get('score', 0) if result else 0,
                 'success': result.get('success', False) if result else False
             }
+            
+            # AI 응답 저장
+            if response:
+                entry['response'] = response
             
             # 사용자 정보 추출
             user_info = self._extract_user_info(user_input)

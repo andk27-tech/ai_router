@@ -339,5 +339,22 @@
     "winner": "expand_extensive",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:37:07.367944",
+    "input": "내 이름은 철수야",
+    "winner": "expand_extensive",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T13:37:17.279184",
+    "input": "내 이름이 뭐라고?",
+    "winner": "balance",
+    "score": 0,
+    "success": false
   }
 ]
