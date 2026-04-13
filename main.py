@@ -72,17 +72,18 @@ async def run(req: Request):
     if data.startswith("웹검색 "):
         query = data[4:]  # "웹검색 " 제거
         try:
-            # DuckDuckGo API 사용
+            # Google Search 사용 (serpapi 대신 직접 검색)
             import requests
             from urllib.parse import quote
             
-            ddg_url = f"https://duckduckgo.com/html/?q={quote(query)}"
-            response = requests.get(ddg_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
+            # Google 검색 결과 페이지
+            google_url = f"https://www.google.com/search?q={quote(query)}&hl=ko"
+            response = requests.get(google_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}, timeout=10)
             
             if response.status_code == 200:
                 # 간단한 웹 검색 결과 추출
                 import re
-                results = re.findall(r'<a rel="nofollow" class="result__a" href="([^"]+)">([^<]+)</a>', response.text)
+                results = re.findall(r'<div[^>]*><a[^>]*href="([^"]+)"[^>]*>([^<]+)</a>', response.text)
                 if results:
                     search_results = "\n".join([f"{title}: {url}" for url, title in results[:5]])
                     ctx = f"웹 검색 결과:\n{search_results}"
