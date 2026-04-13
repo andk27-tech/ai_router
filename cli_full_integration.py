@@ -230,10 +230,10 @@ class AIFullRouterCLI:
             score = 8.5 if tool_result.get('success', False) else 5.0
             print(f"   Score: {score}/10")
         
-        # 8. Memory storage (DISABLED for clean testing)
+        # 8. Memory storage (ENABLED)
         print("\n8. Memory storage (DISABLED)")
-        # self._save_to_memory(user_input, tool_result, winner)  # Temporarily disabled
-        print("   Storage skipped for clean testing")
+        self._save_to_memory(user_input, tool_result, winner)
+        print("   Storage complete")
         
         # 9. Reward calculation
         print("\n9. Reward calculation (Reward)")
