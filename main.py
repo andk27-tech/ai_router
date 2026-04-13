@@ -272,16 +272,23 @@ async def system_logs():
         log_dir = 'log/source_log'
         logs = []
         
-        if os.path.exists(log_dir):
-            log_files = sorted(os.listdir(log_dir), reverse=True)[:5]
+        if os.path.exists(log_dir) and os.path.isdir(log_dir):
+            log_files = sorted([f for f in os.listdir(log_dir) if f.endswith('.log')], reverse=True)[:5]
             for log_file in log_files:
                 log_path = os.path.join(log_dir, log_file)
-                with open(log_path, 'r', encoding='utf-8') as f:
-                    lines = f.readlines()[-10:]
-                    logs.append({
-                        "file": log_file,
-                        "content": ''.join(lines)
-                    })
+                if os.path.isfile(log_path):
+                    try:
+                        with open(log_path, 'r', encoding='utf-8') as f:
+                            lines = f.readlines()[-10:]
+                            logs.append({
+                                "file": log_file,
+                                "content": ''.join(lines)
+                            })
+                    except Exception as e:
+                        logs.append({
+                            "file": log_file,
+                            "content": f"읽기 오류: {str(e)}"
+                        })
         
         return {
             "status": "success",
