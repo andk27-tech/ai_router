@@ -782,5 +782,19 @@
     "score": 10,
     "policy": "balance",
     "timestamp": "2026-04-13T17:44:00.926804"
+  },
+  {
+    "input": "하이",
+    "output": "안녕하세요! 무엇을 도와드릴까요?",
+    "score": 10,
+    "policy": "balance",
+    "timestamp": "2026-04-13T17:59:45.427675"
+  },
+  {
+    "input": "웹검색 최신음악",
+    "output": "[AI 응답 시간 초과 - 잠시 후 다시 시도해주세요]",
+    "score": 10,
+    "policy": "balance",
+    "timestamp": "2026-04-13T18:00:50.051012"
   }
 ]
