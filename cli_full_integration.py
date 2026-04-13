@@ -312,18 +312,34 @@ class AIFullRouterCLI:
         # Google 검색 URL 생성
         search_url = f"https://www.google.com/search?q={search_query}"
         
+        print(f"   🔍 웹 검색: {search_query}")
+        print(f"   🌐 검색 URL: {search_url}")
+        
         # 웹 스크래핑 시도
         result = self.web_tool.call_api(search_url, method='GET', headers={'User-Agent': 'Mozilla/5.0'})
         
         if result['success']:
+            print(f"   ✅ 검색 성공: 상태 코드 {result['status_code']}")
+            print(f"   ⏱️  소요 시간: {result.get('elapsed_time', 0):.2f}초")
+            
+            # 검색 결과 데이터 추출 시도
+            if isinstance(result.get('data'), dict):
+                data = result['data']
+                print(f"   📊 검색 결과 데이터: {str(data)[:200]}")
+            else:
+                print(f"   📊 검색 결과: {str(result.get('data', ''))[:200]}")
+            
             return {
                 'success': True,
                 'type': 'web',
                 'query': search_query,
                 'message': f'"{search_query}" 검색을 수행했습니다',
-                'status_code': result['status_code']
+                'status_code': result['status_code'],
+                'data': result.get('data', ''),
+                'url': search_url
             }
         else:
+            print(f"   ❌ 검색 실패: {result.get('error', '검색 실패')}")
             return {
                 'success': False,
                 'type': 'web',
@@ -471,6 +487,12 @@ class AIFullRouterCLI:
                 context_parts.append(f"System status:")
                 context_parts.append(f"- CPU: {cpu.get('percent', 0)}% ({cpu.get('status', 'unknown')})")
                 context_parts.append(f"- Memory: {mem.get('percent_used', 0)}% used")
+            elif tool_result.get('type') == 'web':
+                context_parts.append(f"Web search result:")
+                context_parts.append(f"- Query: {tool_result.get('query', '')}")
+                context_parts.append(f"- Status: {'Success' if tool_result.get('success') else 'Failed'}")
+                if tool_result.get('data'):
+                    context_parts.append(f"- Data: {str(tool_result.get('data', ''))[:300]}")
         
         # Concise prompt
         prompt = f"""User: {user_input}

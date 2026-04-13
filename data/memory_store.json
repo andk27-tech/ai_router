@@ -418,5 +418,26 @@
     "winner": "expand_broad",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T14:12:47.464753",
+    "input": "웹최신음악",
+    "winner": "expand",
+    "score": 0,
+    "success": false
+  },
+  {
+    "timestamp": "2026-04-13T14:13:38.165186",
+    "input": "웹검색 최신음악",
+    "winner": "expand",
+    "score": 0,
+    "success": true
+  },
+  {
+    "timestamp": "2026-04-13T14:14:36.359280",
+    "input": "울산 오늘의날씨",
+    "winner": "expand_detailed",
+    "score": 0,
+    "success": false
   }
 ]
