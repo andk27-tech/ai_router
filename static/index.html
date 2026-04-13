@@ -118,30 +118,28 @@
     </div>
     
     <div class="input-container">
-        <textarea id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" rows="1"></textarea>
+        <button id="user-input" onclick="showInput()">메시지를 입력하세요...</button>
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
     <script>
         const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
+        let userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
         
         // Enter 키로 전송
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+
         
         async function sendMessage() {
-            const message = userInput.value.trim();
+            const inputElement = document.getElementById('user-input');
+            const message = inputElement.tagName === 'INPUT' ? inputElement.value.trim() : '';
             if (!message) return;
             
             // 사용자 메시지 추가
             addMessage(message, 'user');
-            userInput.value = '';
+            if (inputElement.tagName === 'INPUT') {
+                inputElement.value = '';
+            }
             
             // 로딩 표시
             sendBtn.disabled = true;
@@ -277,7 +275,6 @@
             }
             
             sendBtn.disabled = false;
-            userInput.focus();
         }
         
         function addMessage(text, sender, isError = false) {
@@ -290,6 +287,29 @@
         
         function scrollToBottom() {
             chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function showInput() {
+            const button = document.getElementById('user-input');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = '메시지를 입력하세요...';
+            input.autocomplete = 'off';
+            input.id = 'user-input';
+            input.style.width = '100%';
+            input.style.padding = '10px';
+            input.style.border = 'none';
+            input.style.borderRadius = '20px';
+            input.style.background = '#444';
+            input.style.color = '#fff';
+            input.style.outline = 'none';
+            
+            button.parentNode.replaceChild(input, button);
+            input.focus();
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
         }
     </script>
 </body>
