@@ -391,6 +391,11 @@ class AIFullRouterCLI:
         # Build context
         context_parts = [f"Winner agent: {winner}"]
         
+        # 사용자 정보 검색 (메모리에서)
+        user_info = self._get_user_info_from_memory()
+        if user_info and user_info.get('name'):
+            context_parts.insert(0, f"User name: {user_info['name']}")
+        
         if tool_result:
             if tool_result.get('type') == 'log':
                 context_parts.append(f"Log analysis:")
