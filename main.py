@@ -12,11 +12,17 @@ from core.memory import save as memory_save, get_success, get_recent
 from core.reward import calc_reward
 from core.policy_evolve import next_generation
 from core.tools.web_tool import WebTool
+from core.tools.music_tool import MusicTool
 
 app = FastAPI(title="AI Router API", version="1.0")
 
 # 툴 초기화
 web_tool = WebTool()
+music_tool = MusicTool()
+
+# 음악 재생 프로세스 저장
+music_process = None
+last_music_search = []
 
 # 정적 파일 서빙
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -138,6 +144,98 @@ async def web_search(req: Request):
             "type": "web",
             "query": query,
             "result": result
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+
+@app.post("/api/music/search")
+async def music_search(req: Request):
+    """음악 검색 엔드포인트"""
+    body = await req.json()
+    query = body.get("query", "")
+    limit = body.get("limit", 5)
+    
+    if not query:
+        return {
+            "status": "error",
+            "error": "검색어가 필요합니다"
+        }
+    
+    try:
+        result = music_tool.search_music(query, limit=limit)
+        
+        return {
+            "status": "success",
+            "type": "music",
+            "query": query,
+            "result": result
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+
+@app.post("/api/music/play")
+async def music_play(req: Request):
+    """음악 재생 엔드포인트"""
+    body = await req.json()
+    url = body.get("url", "")
+    
+    if not url:
+        return {
+            "status": "error",
+            "error": "URL이 필요합니다"
+        }
+    
+    global music_process
+    global last_music_search
+    
+    try:
+        # 이전 음악 중지
+        if music_process:
+            import subprocess
+            subprocess.run(['pkill', '-9', 'mpv'], capture_output=True)
+            music_process = None
+        
+        # 음악 재생
+        result = music_tool.play_music(url)
+        
+        if result['success']:
+            music_process = result.get('pid')
+        
+        return {
+            "status": "success",
+            "type": "music",
+            "result": result
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+
+@app.post("/api/music/stop")
+async def music_stop():
+    """음악 중지 엔드포인트"""
+    global music_process
+    
+    try:
+        if music_process:
+            import subprocess
+            subprocess.run(['pkill', '-9', 'mpv'], capture_output=True)
+            music_process = None
+        
+        return {
+            "status": "success",
+            "type": "music",
+            "message": "음악 중지됨"
         }
     except Exception as e:
         return {
