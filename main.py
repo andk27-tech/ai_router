@@ -68,31 +68,9 @@ async def run(req: Request):
     body = await req.json()
     data = body.get("data", "")
 
-    # 웹검색 처리
+    # 웹검색 처리 (현재 기능 제거됨)
     if data.startswith("웹검색 "):
-        query = data[4:]  # "웹검색 " 제거
-        try:
-            # Google Search 사용 (serpapi 대신 직접 검색)
-            import requests
-            from urllib.parse import quote
-            
-            # Google 검색 결과 페이지
-            google_url = f"https://www.google.com/search?q={quote(query)}&hl=ko"
-            response = requests.get(google_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}, timeout=10)
-            
-            if response.status_code == 200:
-                # 간단한 웹 검색 결과 추출
-                import re
-                results = re.findall(r'<div[^>]*><a[^>]*href="([^"]+)"[^>]*>([^<]+)</a>', response.text)
-                if results:
-                    search_results = "\n".join([f"{title}: {url}" for url, title in results[:5]])
-                    ctx = f"웹 검색 결과:\n{search_results}"
-                else:
-                    ctx = "검색 결과를 찾을 수 없습니다."
-            else:
-                ctx = "검색 실패"
-        except Exception as e:
-            ctx = f"검색 오류: {str(e)}"
+        ctx = "웹 검색 기능은 현재 사용할 수 없습니다. 일반 AI 질문을 사용해주세요."
     else:
         # Build simplified prompt for faster response
         ctx = search(data)
