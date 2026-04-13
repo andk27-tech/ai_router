@@ -231,7 +231,7 @@ class AIFullRouterCLI:
             print(f"   Score: {score}/10")
         
         # 8. Memory storage (ENABLED)
-        print("\n8. Memory storage (DISABLED)")
+        print("\n8. Memory storage (ENABLED)")
         self._save_to_memory(user_input, tool_result, winner)
         print("   Storage complete")
         
