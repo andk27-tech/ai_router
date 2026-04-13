@@ -118,7 +118,7 @@
     </div>
     
     <div class="input-container">
-        <input type="text" id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" inputmode="none">
+        <textarea id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" rows="1"></textarea>
         <button id="send-btn" onclick="sendMessage()">전송</button>
     </div>
 
@@ -127,14 +127,12 @@
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
         
-        // 입력창 클릭 시 inputmode 변경
-        userInput.addEventListener('click', () => {
-            userInput.setAttribute('inputmode', 'text');
-        });
-        
         // Enter 키로 전송
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
         });
         
         async function sendMessage() {
