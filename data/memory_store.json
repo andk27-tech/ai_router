@@ -356,5 +356,22 @@
     "winner": "balance",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T13:38:13.689046",
+    "input": "내 이름은 철수야",
+    "winner": "expand_broad",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T13:38:26.970354",
+    "input": "내 이름이 뭐라고?",
+    "winner": "expand_deep_refine_hybrid",
+    "score": 0,
+    "success": false
   }
 ]
