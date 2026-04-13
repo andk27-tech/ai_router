@@ -78,7 +78,7 @@ async def run(req: Request):
             genai.configure(api_key="AIzaSyCKWJ8_hd0NclaXWMVdf01kC2smeilTrcM")
             
             # Gemini 모델 사용
-            model = genai.GenerativeModel('gemini-pro')
+            model = genai.GenerativeModel('gemini-1.5-pro')
             
             # 검색 프롬프트
             search_prompt = f"{query}에 대해 알려주세요"
