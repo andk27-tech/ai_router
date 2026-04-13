@@ -81,7 +81,7 @@ async def run(req: Request):
             model = genai.GenerativeModel('gemini-pro')
             
             # 검색 프롬프트
-            search_prompt = f"다음 질문에 대해 간단 명료하게 2-3줄로 답변해주세요: {query}"
+            search_prompt = f"{query}에 대해 알려주세요"
             
             # 응답 생성
             response = model.generate_content(search_prompt)
