@@ -109,5 +109,22 @@
     "winner": "expand_broad",
     "score": 0,
     "success": false
+  },
+  {
+    "timestamp": "2026-04-13T12:50:06.738374",
+    "input": "내 이름은 철수야",
+    "winner": "expand",
+    "score": 0,
+    "success": false,
+    "user_info": {
+      "name": "철수야"
+    }
+  },
+  {
+    "timestamp": "2026-04-13T12:50:19.573657",
+    "input": "내 이름이 뭐라고?",
+    "winner": "refine_expand_hybrid",
+    "score": 0,
+    "success": false
   }
 ]
